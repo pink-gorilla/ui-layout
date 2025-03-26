@@ -1,0 +1,25 @@
+
+/* important, so that scaling of flex layouts would not be distorted */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensures padding and border don't affect element size */
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensures padding and border don't affect element size */
+}
+
+
+/* dali-text uses this (this come from tailwind css) */
+
+.font-mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+.whitespace-pre {
+    white-space: pre;
+  }

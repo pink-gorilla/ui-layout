@@ -114,46 +114,59 @@
 (defn component-panel [comp options-a]
   [comp @options-a])
 
-(defn cp2 [{:keys [comp options-a]}]
-  (r/as-element [component-panel comp options-a]))
+;; We require a functional compiler to avoid invalid hook errors when passing portal components as React elements with `r/as-element`.
+;; This is because portal is built using basic syntax `[component]` instead of `[:f> component]` for functional components with hooks.
+(def functional-compiler (r/create-compiler {:function-components true}))
+
+(defn as-element [el]
+  ;(r/as-element el)
+  (r/as-element el functional-compiler))
+
 
 (defn make-factory [{:keys [option-a] :as state}]
   (fn [^js node]
-    (react/createElement
-     (let [#_{:keys [id component]}
-           #_(react/useMemo
-              (fn []
-                {:id (.getId node)
-                 :component (.getComponent node)})
-              node)
-           id (.getId node)
-           component (.getComponent node)
-           comp (component-ui {:id id
-                               :component component
-                               :state state})
-           options-a (subscribe-options option-a id)]
-                      ;(println "comp: " comp)
-       (partial cp2 {:comp comp
-                     :options-a options-a}))
-     (clj->js {})
-     (clj->js nil))))
-
-(defn make-factory2 [{:keys [option-a] :as state}]
-  ; this works, however, the reactMemo hook is not wrapped around the react component,
-  ; and therefore leads to frequent re-rendering of compoennts
-  (fn [^js node]
-    (let [cell-id (.getId node)
+    (let [id (.getId node)
           component (.getComponent node)
-          comp (component-ui {:id cell-id
+          comp (component-ui {:id id
                               :component component
                               :state state})
-          options-for-component (subscribe-options option-a cell-id)
-          _ (println "creating id: " cell-id " component: " component)
+          options-a (subscribe-options option-a id)
           ; as-element does not wrap reagent wrappers (cannot use ratom)
           ; :> also calls as-element but also does converstion of parameters to js
-          react-el (r/as-element [component-panel comp options-for-component])]
-      ;(cp2 comp options-for-component)
-      react-el)))
+          react-el (as-element [component-panel comp options-a]) ; Turns a vector of Hiccup syntax into a React element.
+          memoized-el (react/memo (fn [] react-el))
+          component-el (react/createElement memoized-el (clj->js {}) (clj->js nil))
+          ;reagent-component (fn [] [component-panel comp options-a])
+          ;react-el  (r/reactify-component reagent-component)
+          ;react-el2 (react/createElement react-el (clj->js {}) (clj->js nil))
+          ;el-memoized (react/memo (fn []
+          ;                          (react/createElement react-el (clj->js {}) (clj->js nil))
+          ;                          ))
+          ]
+      
+      
+      (println "react el: " react-el)
+      (println "react comp: " component)
+      
+      ;react-el
+      component-el
+      
+      )
+    
+    #_(react/createElement
+       (let [#_{:keys [id component]}
+             #_(react/useMemo
+                (fn []
+                  {:id (.getId node)
+                   :component (.getComponent node)})
+                node)
+             ]
+                      ;(println "comp: " comp)
+         (partial cp2 {:comp comp
+                       :options-a options-a}))
+       (clj->js {})
+       (clj->js nil))))
+
 
 ; let welcome = React.createElement(
 ;  "h1",
@@ -183,7 +196,7 @@
 
 (defn layout
   "The model is tree of Node objects that define the structure of the layout.
-   The factory is a function that takes a Node object and returns a React componen"
+   The factory is a function that takes a Node object and returns a React componeny"
   [{:keys [layout-a model] :as state}]
   (let [model (-> model
                   clj->js

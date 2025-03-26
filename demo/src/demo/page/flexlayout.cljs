@@ -59,20 +59,25 @@
                           :component "option"
                           :enableClose false}]}]})
 
-(def m (create-model
-        {:model model
-         :options {"wikipedia1" "https://en.wikipedia.org/wiki/Main_Page"
-                   "3" 10000
-                   "text" "hello\r\nI come from the options!"
-                   }}))
+(defonce
+  m 
+  (create-model
+   {:model model
+    :options {"wikipedia1" "https://en.wikipedia.org/wiki/Main_Page"
+             "3" 10000
+             "text" "hello\r\nI come from the options!"
+               }}))
 
 ; (set! (.-model js/window) m)
 
 (defn flex-layout-page [{:keys [route-params query-params handler] :as route}]
-  [:div.h-screen.w-screen
+  [:div
    {:style {:display "flex"
             :flex-direction "column"
-            :flex-grow 1}}
+            :flex-grow 1
+            :width "100vw"
+            :height "100vh"
+            }}
    [:div {:dir "ltr"
           :style {:margin "2px"
                   :display "flex"
@@ -94,14 +99,20 @@
               :border "1px solid lightgray"}}
      "add unknown-component"]
 
-     [:button
+    [:button
      {:on-click #(add-node m {:component "data"
                               :icon "/r/images/article.svg",
                               :name "Grid-added"})
       :style {:border-radius "5px"
               :border "1px solid lightgray"}}
      "add data"]
-
+    
+    [:button
+     {:on-click #(add-node m {:component "clock"
+                              :name "clock"})
+      :style {:border-radius "5px"
+              :border "1px solid lightgray"}}
+     "add clock"]
 
     [:button
      {:on-click #(add-node m {:component "url"

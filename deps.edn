@@ -9,8 +9,7 @@
  :aliases
  {; github ci  
   :build {:deps {io.github.clojure/tools.build {:mvn/version "0.9.6"}
-                 slipset/deps-deploy {:mvn/version "0.2.1"}
-                 babashka/fs {:mvn/version "0.0.5"}}
+                 slipset/deps-deploy {:mvn/version "0.2.1"}}
           :ns-default build}
 
   ; https://github.com/weavejester/cljfmt
@@ -32,21 +31,16 @@
    :main-opts ["-m" "clj-check.check"]}
 
   ; ci
-
-  :webly {:extra-deps {org.pinkgorilla/webly {:mvn/version "0.5.689"}
-                       org.pinkgorilla/ui-repl {:mvn/version "0.1.105"}}
-          :exec-fn webly.app.app/webly-build
+  
+  :webly {:extra-deps {org.pinkgorilla/webly {:mvn/version "0.9.721"}}
+          :exec-fn webly.spa/webly-build
           :exec-args {:config [{:build {:disabled-extensions #{}}}]
                       :profile "npm-install"}}
 
   :npm-install {:exec-args {:profile "npm-install"}}
-  :compile {:exec-args {:profile "compile2"}}
-  :release {:exec-args {:profile "release"}}
-  :release-adv {:exec-args {:profile "release-adv"}}
-  :static {:exec-args {:profile "static"}}
-  :ci {:exec-args {:profile "ci"}}
+  
 
    ; for demo see README.md or go to "demo" folder and run aliases there.
-
+  
 ;
   }}

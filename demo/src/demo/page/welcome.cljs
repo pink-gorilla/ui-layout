@@ -1,7 +1,6 @@
 (ns demo.page.welcome
   (:require
    [reagent.core :as r]
-   [input]
    [ui.rnd :refer [rnd]]
    [ui.overlay :as overlay]
    ;[demo.lib.debounce :refer [save-input-debounced!]]
@@ -12,13 +11,7 @@
   (let [*state (r/atom {:name "Peter"})]
     (fn []
       [:div.bg-green-300.p-5.border.border-solid.border-blue-800.w-full.h-full.overflow-hidden
-       [:h1 "INFO !!!"]
-       [input/textbox {:placeholder "Name"
-                          ;:on-change save-input!
-                       ;:on-change save-input-debounced!
-                       }
-        *state [:name]]
-       [input/button {:on-click #(js/alert (str (:name @*state) " is traveling to Hawai!"))} "Travel!"]])))
+       [:h1 "INFO !!!"]])))
 
 (defn info-box []
   [rnd {:bounds "window"
@@ -43,22 +36,21 @@
 (defn welcome-page [{:keys [route-params query-params handler] :as route}]
   [:div
    [info-box]
-   [:h1 "ui-input demos"]
+   [:h1 "ui-layout demos"]
 
    [:a {:on-click #(overlay/overlay-add "6969" [hello])} 
     [:p "overlay-add"]]
    [:a {:on-click #(overlay/overlay-remove "6969")}
     [:p "overlay-remove"]]
 
-   [:a {:href "input"} [:p "input"]]
    [:a {:href "/spaces/main"} [:p "layout"]]
    [:a {:href "description-list"} [:p "Description List"]]
    [:a {:href "grid-layout"} [:p "Grid Layout"]]
    [:a {:href "flex-layout"} [:p "Flex Layout"]]
    [:a {:href "spaces/main"} [:p "Spaces Layout"]]
    [:a {:href "/sidebartree"} [:p "sidebar tree"]]
-   [:a {:href "/devtools"} [:p "devtools"]]
    [:a {:href "/tab"} [:p "tab"]]
+   [:a {:href "/golden"} [:p "golden"]]
    ])
 
 

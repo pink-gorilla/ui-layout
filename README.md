@@ -1,11 +1,4 @@
-# ui-input [![GitHub Actions status |pink-gorilla/ui-binary-clock](https://github.com/pink-gorilla/ui-input/workflows/CI/badge.svg)](https://github.com/pink-gorilla/ui-input/actions?workflow=CI)[![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/ui-input.svg)](https://clojars.org/org.pinkgorilla/ui-input)
-
-## Input controls
--input/button 
--input/textbox 
--input/checkbox
--input/select
--input/progressbar                           
+# ui-layout [![GitHub Actions status |pink-gorilla/ui-layout](https://github.com/pink-gorilla/ui-layout/workflows/CI/badge.svg)](https://github.com/pink-gorilla/ui-layout/actions?workflow=CI)[![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/ui-layout.svg)](https://clojars.org/org.pinkgorilla/ui-layout)
 
 
 ## Container controls
@@ -46,7 +39,7 @@
 
 ```
 cd demo
-clojure -X:webly:npm-install"
+clojure -X:webly:npm-install
 clojure -X:webly:compile
 clojure -X:webly:run
 ```
