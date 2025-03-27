@@ -11,7 +11,7 @@
    (fn [^ComponentContainer container state]
      (println "creating reagent panel: " name)
      (let [root (dom/create-root (.getElement container))
-           state-clj (js->clj state)]
+           state-clj (js->clj state :keywordize-keys true)]
        (dom/render root [reagent-ui-fn state-clj])
        (.on container "destroy"
             (fn []
