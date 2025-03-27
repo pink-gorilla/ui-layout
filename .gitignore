@@ -6,10 +6,6 @@ pom.xml.asc
 /classes/
 /target/
 /checkouts/
-.lein-deps-sum
-.lein-repl-history
-.lein-plugins/
-.lein-failures
 .nrepl-port
 .cpcache/
 karma.conf.js
@@ -18,9 +14,9 @@ package-lock.json
 shadow-cljs.edn
 .shadow-cljs
 /node_modules
-goldly_bindings_generated.cljs
 .lsp
 .webly
 .clj-kondo
 demo/node_modules/
 demo/target/
+.gorilla

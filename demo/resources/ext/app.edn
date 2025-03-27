@@ -1,30 +1,37 @@
 {:name "demo-app"
  :lazy true
- :depends-on #{:ui-container :ui-input :ui-popover
+ :depends-on #{:ui-container  :ui-popover ; :ui-input
                :ui-rnd :ui-gridlayout :ui-flexlayout :ui-site
-               :cljs-frisk
+               :cljs-frisk :layout-golden
                }
  :cljs-namespace [demo.page.welcome
-                  demo.page.input
+                  ;demo.page.input
                   demo.page.desclist
                   demo.page.layout
                   demo.page.gridlayout
                   demo.page.flexlayout
                   demo.page.spaces
                   demo.page.sidebartree
-                  demo.page.tab]
+                  demo.page.tab
+                  demo.page.golden]
  :cljs-ns-bindings {'demo.page.welcome {'welcome-page  demo.page.welcome/welcome-page}
-                    'demo.page.input {'welcome-page  demo.page.input/input-page}
+                    ;'demo.page.input {'welcome-page  demo.page.input/input-page}
                     'demo.page.desclist {'desclist-page  demo.page.desclist/desclist-page}
                     'demo.page.layout {'layout-page  demo.page.layout/layout-page}
                     'demo.page.gridlayout {'grid-layout-page  demo.page.gridlayout/grid-layout-page}
                     'demo.page.flexlayout {'flex-layout-page demo.page.flexlayout/flex-layout-page}
-                    'demo.page.spaces {'spaces-page  demo.page.spaces/spaces-page}
+                    'demo.page.spaces {'spaces-page  demo.page.spaces/spaces-page
+                                       'spaces-layout-lrt-viewport-page demo.page.spaces/spaces-layout-lrt-viewport-page
+                                       'spaces-layout-lrm-viewport-page demo.page.spaces/spaces-layout-lrm-viewport-page
+                                       'spaces-layout-lrt-fixed-page demo.page.spaces/spaces-layout-lrt-fixed-page
+                                       'spaces-layout-lrm-fixed-page demo.page.spaces/spaces-layout-lrm-fixed-page}
                     'demo.page.sidebartree {'sidebar-page  demo.page.sidebartree/sidebar-page}
-                    'demo.page.tab {'tab-page  demo.page.tab/tab-page}}
+                    'demo.page.tab {'tab-page  demo.page.tab/tab-page}
+                    'demo.page.golden {'page  demo.page.golden/page}
+                    }
 ; runtime
  :cljs-routes {"" demo.page.welcome/welcome-page
-               "input" demo.page.input/input-page
+               ;"input" demo.page.input/input-page
                "description-list" demo.page.desclist/desclist-page
                "layout" demo.page.layout/layout-page
                "grid-layout" demo.page.gridlayout/grid-layout-page
@@ -35,4 +42,6 @@
                           "layout-fixed-lrt"  demo.page.spaces/spaces-layout-lrt-fixed-page
                           "layout-fixed-lrm"  demo.page.spaces/spaces-layout-lrm-fixed-page}
                "sidebartree" demo.page.sidebartree/sidebar-page
-               "tab" demo.page.tab/tab-page}}
+               "tab" demo.page.tab/tab-page
+               "golden" demo.page.golden/page
+               }}

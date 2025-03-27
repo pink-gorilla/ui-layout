@@ -1,0 +1,19 @@
+{:name "layout-golden"
+ ; build
+ :lazy true
+ :cljs-namespace [layout.golden]
+ :cljs-ns-bindings {'layout.golden {'register-reagent-component layout.golden/register-reagent-component
+                                    'golden-layout-component layout.golden/golden-layout-component
+                                    'save-layout layout.golden/save-layout
+                                    'load-layout layout.golden/load-layout
+                                    'add-component layout.golden/add-component
+                                    }}
+
+ :theme {:available  {:golden {true ["golden-layout/dist/css/goldenlayout-base.css"
+                                     "golden-layout/dist/css/themes/goldenlayout-light-theme.css"
+                                     "layout.css"
+                                     ]}}
+         :current {:golden true}}}
+
+
+

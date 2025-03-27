@@ -14,8 +14,11 @@
 
   "flexlayout-react" "0.8.1" ; tab/layout system
 
-  "react" "^18.0.0"
-  "react-dom" "^18.0.0 "
+  "golden-layout" "^2.6.0" ; tab/layout/window system
+
+ ; react dependency is in webly.
+ ; "react" "^18.0.0"
+ ; "react-dom" "^18.0.0 "
 
  ;
   }}

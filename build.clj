@@ -1,11 +1,10 @@
 (ns build
   (:require
-   [babashka.fs :as fs]
    [clojure.tools.build.api :as b]
    [deps-deploy.deps-deploy :as dd]))
 
-(def lib 'org.pinkgorilla/ui-input)
-(def version (format "0.2.%s" (b/git-count-revs nil)))
+(def lib 'org.pinkgorilla/ui-layout)
+(def version (format "0.3.%s" (b/git-count-revs nil)))
 (def class-dir "target/classes")
 (def basis (b/create-basis {:project "deps.edn"}))
 (def jar-file (format "target/%s-%s.jar" (name lib) version))
@@ -22,9 +21,9 @@
     [:developer
      [:name "pink-gorilla"]]]
    [:scm
-    [:url "https://github.com/pink-gorilla/ui-input/"]
-    [:connection "scm:git:git://github.com/pink-gorilla/ui-input.git"]
-    [:developerConnection "scm:git:ssh://git@github.com/pink-gorilla/ui-input.git"]]])
+    [:url "https://github.com/pink-gorilla/ui-layout/"]
+    [:connection "scm:git:git://github.com/pink-gorilla/ui-layout.git"]
+    [:developerConnection "scm:git:ssh://git@github.com/pink-gorilla/ui-layout.git"]]])
 
 (def opts {:class-dir class-dir
            :lib lib

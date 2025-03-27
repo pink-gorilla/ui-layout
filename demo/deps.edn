@@ -5,49 +5,41 @@
  :deps
  {org.clojure/clojure    {:mvn/version "1.11.1"}
   ; webly
-  org.pinkgorilla/webly {:mvn/version "0.7.702"} ; build tool
+  org.pinkgorilla/webly {:mvn/version "0.9.721"} ; build tool
   ; extensions
   org.pinkgorilla/ui-input {:local/root "../" :deps/manifest :deps}
-  org.pinkgorilla/ui-repl {:mvn/version "0.1.109"} ; reagent
   org.pinkgorilla/ui-site {:mvn/version "0.0.31"}; ipsum
-  org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.10"} ; notification
-  org.pinkgorilla/ui-pprint-frisk {:mvn/version "0.6.564"} ; pprint is no longer contained there.
+  org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.12"} ; notification 
+  org.pinkgorilla/ui-pprint-frisk {:mvn/version "0.6.565"} ; pprint is no longer contained there.
   }
 
  :aliases
- {;; WATCH
-  :npm-install
-  {:exec-fn webly.app.app/webly-build
-   :config {}
-   :exec-args {:profile "npm-install"}}
-  :demo
-  {:exec-fn modular.system/start!
-   :exec-args {;:profile "jetty"
-               :profile "watch"
-               :config {}
-               :services "demo-services.edn"}}
-
-           ;; BUILD / SERVE
-
-  :compile {:exec-fn webly.app.app/webly-build
-            :config {}
-            :exec-args {:profile "compile"}}
-
-  :release-adv {:exec-fn webly.app.app/webly-build
-                :config {}
-                :exec-args {:profile "release-adv"}}
-
-  :jetty
-  {:exec-fn modular.system/start!
-   :exec-args {:profile "jetty"
-               :config {}
-               :services "demo-services.edn"}}
-
+ {; BUILD BUNDLE (then exit)
+  :webly {:extra-deps {}
+          :extra-paths ["src" "resources" "test" "test/resources"]
+          :exec-fn webly.spa/webly-build
+          :exec-args {:config []
+                      :profile "npm-install"}}
+  
+  :npm-install {:exec-args {:profile "npm-install"}}
+  :compile {:exec-args {:profile "compile"}}
+  :release {:exec-args {:profile "release"}}
+  :release-adv {:exec-args {:profile "release-adv"}}
   :static {:exec-args {:profile "static"}}
   :ci {:exec-args {:profile "ci"}}
-  :run {:exec-fn modular.system/start!
-        :exec-args {:profile "jetty"
-                    :services "demo-services.edn"}}}}
+  
+    ; RUN SERVICES (keep running)
+  :run-jetty {:exec-fn modular.system/start!
+              :exec-args {:config []
+                          :profile "jetty"
+                          :services "demo-services.edn"}}
+  
+  :run-watch {:exec-fn modular.system/start!
+              :exec-args {:config []
+                          :profile "watch"
+                          :services "demo-services.edn"}}
+  
+  }}
 
 
  
