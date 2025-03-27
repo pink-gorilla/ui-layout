@@ -2,8 +2,7 @@
   (:require
    [reagent.core :as r]
    [reagent.dom.client :as dom]
-   ["golden-layout" :refer [GoldenLayout ItemType LayoutConfig ComponentContainer LayoutManager ResolvedComponentItemConfig]]
-   ))
+   ["golden-layout" :refer [GoldenLayout ItemType LayoutConfig ComponentContainer LayoutManager ResolvedComponentItemConfig]]))
 
 (defn register-reagent [^GoldenLayout layout name reagent-ui-fn]
   (println "registering reagent component: " name)
@@ -26,55 +25,44 @@
 
 (defn register-reagent-components [^GoldenLayout layout]
   (doall (map (fn [[name reagent-ui-fn]]
-                 (register-reagent layout name reagent-ui-fn)) @reagent-components-a)))
+                (register-reagent layout name reagent-ui-fn)) @reagent-components-a)))
 
 (defonce layout-ref (atom nil))
 
-
-(defn handleBindComponentEvent [^ComponentContainer container ^ResolvedComponentItemConfig itemConfig]
-  (let [layout ^GoldenLayout @layout-ref
-        component-type-name (.resolveComponentTypeName ResolvedComponentItemConfig itemConfig)
-        component (.createVirtualComponent layout container component-type-name (.-componentState itemConfig))
-        comp-root-el (.-rootHtmlElment component)]
-    (.appendChild (._layoutElement layout) comp-root-el)
-    (.set (._boundComponentMap container component))
+#_(defn handleBindComponentEvent [^ComponentContainer container ^ResolvedComponentItemConfig itemConfig]
+    (println "handle Bind Component Event: " itemConfig)
+    (let [layout ^GoldenLayout @layout-ref
+          component-type-name (.resolveComponentTypeName ResolvedComponentItemConfig itemConfig)
+          component (.createVirtualComponent layout container component-type-name (.-componentState itemConfig))
+        ;ComponentContainer
+          comp-root-el (.-rootHtmlElment component)]
+      (.appendChild (._layoutElement layout) comp-root-el)
+      (.set (._boundComponentMap container component))
        ;container.virtualRectingRequiredEvent = (container, width, height) => this.handleContainerVirtualRectingRequiredEvent (container, width, height);
       ;container.virtualVisibilityChangeRequiredEvent = (container, visible) => this.handleContainerVisibilityChangeRequiredEvent (container, visible);
-    #js {:component component
-         :virtual true}))
+      (println "component: " component)
+      #js {:component component
+           :virtual true}))
 
 (defn init-layout [layout-config]
-  (let [_ (println "creating golden layout")
-        dom-el (.getElementById js/document "golden-layout-container")
-        _ (println "dom el: " dom-el)
-        ;config #js {}
-        layout (GoldenLayout. dom-el handleBindComponentEvent) ; config 
-        _ (println "golden layout created.")]
-
-    ;(register-reagent layout "clock" clock)
-    ;(register-reagent layout "PanelA" panel-a)
+  (let [dom-el (.getElementById js/document "golden-layout-container")
+        layout (GoldenLayout. dom-el #_handleBindComponentEvent)]
+    ; register all registered react components 
     (register-reagent-components layout)
-
+    ; example how to register a static html component    
     #_(.registerComponentFactoryFunction layout  "sayHi" (fn [^ComponentContainer container state]
-                                                         (println "sayHi " container state)
-                                                         (let [el (.getElement container)]
-                                                           (println "el: " el)
-                                                           (let [t (.-textContent el)]
-                                                             (println "t: " t)
-                                                             (set! (.-bongo js/window) el)
-                                                             (set! (.-textContent el) (.-name state))
+                                                           (println "sayHi " container state)
+                                                           (let [el (.getElement container)]
+                                                             (println "el: " el)
+                                                             (let [t (.-textContent el)]
+                                                               (println "t: " t)
+                                                               (set! (.-bongo js/window) el)
+                                                               (set! (.-textContent el) (.-name state))
                                               ;(set! t (str "Hi " (.-name state)))
-                                                             )
-                                           ; container.getElement () .text ('Hi '+ state.name); 
-                                                           )))
-    (println "init layout")
-    ;(.init layout)
-
-    (.loadLayout layout layout-config)
-
-    (println "done")
+                                                               ))))
+    (when layout-config
+      (.loadLayout layout (clj->js layout-config)))
     (reset! layout-ref layout)))
-
 
 (defn golden-layout-component [{:keys [layout-config style]}]
   (r/create-class
@@ -82,21 +70,25 @@
     :reagent-render (fn []
                       [:div#golden-layout-container {:style style}])}))
 
-
 (defn save-layout []
   (let [layout ^GoldenLayout @layout-ref
-        data (.saveLayout layout)]
-    (println "saved layout: " data)))
+        _ (println "save-layout: golden-layout: " layout)
+        data-js (.saveLayout layout)
+        data (js->clj data-js)]
+    (println "saved layout: " (pr-str data))
+    data))
 
+(defn load-layout [layout-config]
+  (let [layout ^GoldenLayout @layout-ref
+        layout-config-js (clj->js layout-config)]
+    (.loadLayout layout layout-config-js)))
 
 (defn add-component [cmp]
-  (let [;cmp #js {:type "component"
-        ;         :componentType "clock"
-        ;         :componentState #js {:name "Wolfram"}}
+  (let [_ (println "adding: " cmp)
+        cmp (clj->js cmp)
         ;location #js [ #js {:typeId (-> LayoutManager .-LocationSelector .-TypeId .-FirstRow)
         ;                    :index 2}]
         layout ^GoldenLayout @layout-ref
-        _ (println "adding: " cmp)
         ;addedItem (.newItemAtLocation layout cmp location)
         ;addedItem (.newComponent layout comp)
         ;addedItem (.addComponentAtLocation layout comp)
@@ -105,5 +97,4 @@
     ;(let [ls (.-LocationSelector LayoutManager)]
     ;  (println "location selector: " ls)
     ;  nil)
-    
     ))

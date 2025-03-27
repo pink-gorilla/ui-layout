@@ -122,7 +122,6 @@
   ;(r/as-element el)
   (r/as-element el functional-compiler))
 
-
 (defn make-factory [{:keys [option-a] :as state}]
   (fn [^js node]
     (let [id (.getId node)
@@ -143,30 +142,24 @@
           ;                          (react/createElement react-el (clj->js {}) (clj->js nil))
           ;                          ))
           ]
-      
-      
       (println "react el: " react-el)
       (println "react comp: " component)
-      
+
       ;react-el
-      component-el
-      
-      )
-    
+      component-el)
+
     #_(react/createElement
        (let [#_{:keys [id component]}
              #_(react/useMemo
                 (fn []
                   {:id (.getId node)
                    :component (.getComponent node)})
-                node)
-             ]
+                node)]
                       ;(println "comp: " comp)
          (partial cp2 {:comp comp
                        :options-a options-a}))
        (clj->js {})
        (clj->js nil))))
-
 
 ; let welcome = React.createElement(
 ;  "h1",
