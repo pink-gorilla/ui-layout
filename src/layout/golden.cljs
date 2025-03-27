@@ -10,8 +10,9 @@
    layout name
    (fn [^ComponentContainer container state]
      (println "creating reagent panel: " name)
-     (let [root (dom/create-root (.getElement container))]
-       (dom/render root [reagent-ui-fn state])
+     (let [root (dom/create-root (.getElement container))
+           state-clj (js->clj state)]
+       (dom/render root [reagent-ui-fn state-clj])
        (.on container "destroy"
             (fn []
               (println "reagent container " name " has been destroyed.")
