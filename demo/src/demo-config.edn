@@ -1,0 +1,9 @@
+{
+ :spa {:title "ui-layout demo"
+       :mount-fn router.app/mount}
+ 
+ :reitit {:wrap demo.app/wrap-app}
+
+
+
+}

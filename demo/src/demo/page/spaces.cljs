@@ -7,11 +7,11 @@
 
 (defn nav-layout []
   [:<>
-   [link-href "/spaces/main" "goto spaces/main"]
-   [link-href "/spaces/layout-viewport-lrt" "goto spaces/layout-viewport-lrt"]
-   [link-href "/spaces/layout-viewport-lrm" "goto spaces/layout-viewport-lrm"]
-   [link-href "/spaces/layout-fixed-lrt" "goto spaces/layout-fixed-lrt"]
-   [link-href "/spaces/layout-fixed-lrm" "goto spaces/layout-fixed-lrm"]])
+   [link-href "/#/spaces/main" "goto spaces/main"]
+   [link-href "/#/spaces/layout-viewport-lrt" "goto spaces/layout-viewport-lrt"]
+   [link-href "/#/spaces/layout-viewport-lrm" "goto spaces/layout-viewport-lrm"]
+   [link-href "/#/spaces/layout-fixed-lrt" "goto spaces/layout-fixed-lrt"]
+   [link-href "/#/spaces/layout-fixed-lrm" "goto spaces/layout-fixed-lrm"]])
 
 (defn spaces-1 []
   [spaces/viewport

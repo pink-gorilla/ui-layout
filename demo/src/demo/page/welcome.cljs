@@ -43,14 +43,14 @@
    [:a {:on-click #(overlay/overlay-remove "6969")}
     [:p "overlay-remove"]]
 
-   [:a {:href "/spaces/main"} [:p "layout"]]
-   [:a {:href "description-list"} [:p "Description List"]]
-   [:a {:href "grid-layout"} [:p "Grid Layout"]]
-   [:a {:href "flex-layout"} [:p "Flex Layout"]]
-   [:a {:href "spaces/main"} [:p "Spaces Layout"]]
-   [:a {:href "/sidebartree"} [:p "sidebar tree"]]
-   [:a {:href "/tab"} [:p "tab"]]
-   [:a {:href "/golden"} [:p "golden"]]
+   [:a {:href "/#/spaces/main"} [:p "layout"]]
+   [:a {:href "/#/description-list"} [:p "Description List"]]
+   [:a {:href "/#/grid-layout"} [:p "Grid Layout"]]
+   [:a {:href "/#/flex-layout"} [:p "Flex Layout"]]
+   [:a {:href "/#/spaces/main"} [:p "Spaces Layout"]]
+   [:a {:href "/#/sidebartree"} [:p "sidebar tree"]]
+   [:a {:href "/#/tab"} [:p "tab"]]
+   [:a {:href "/#/golden"} [:p "golden"]]
    ])
 
 

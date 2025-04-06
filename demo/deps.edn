@@ -5,11 +5,14 @@
  :deps
  {org.clojure/clojure    {:mvn/version "1.11.1"}
   ; webly
-  org.pinkgorilla/webly {:mvn/version "0.9.721"} ; build tool
+  org.pinkgorilla/webly {:mvn/version "0.9.724"} ; build tool
+  org.pinkgorilla/extension {:mvn/version "0.0.16"}
+  org.pinkgorilla/ui-router {:mvn/version "0.2.40"}
+  org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.12"}  ; notification 
+  org.pinkgorilla/css-theme {:mvn/version "0.1.8"}
   ; extensions
   org.pinkgorilla/ui-input {:local/root "../" :deps/manifest :deps}
   org.pinkgorilla/ui-site {:mvn/version "0.0.31"}; ipsum
-  org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.12"} ; notification 
   org.pinkgorilla/ui-pprint-frisk {:mvn/version "0.6.565"} ; pprint is no longer contained there.
   }
 
@@ -18,7 +21,7 @@
   :webly {:extra-deps {}
           :extra-paths ["src" "resources" "test" "test/resources"]
           :exec-fn webly.spa/webly-build
-          :exec-args {:config []
+          :exec-args {:config ["demo-config.edn"]
                       :profile "npm-install"}}
   
   :npm-install {:exec-args {:profile "npm-install"}}
@@ -30,12 +33,12 @@
   
     ; RUN SERVICES (keep running)
   :run-jetty {:exec-fn modular.system/start!
-              :exec-args {:config []
+              :exec-args {:config ["demo-config.edn"]
                           :profile "jetty"
                           :services "demo-services.edn"}}
   
   :run-watch {:exec-fn modular.system/start!
-              :exec-args {:config []
+              :exec-args {:config ["demo-config.edn"]
                           :profile "watch"
                           :services "demo-services.edn"}}
   
