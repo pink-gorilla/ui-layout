@@ -1,8 +1,8 @@
 {:name "layout-flexlayout-service"
  ; runtime 
- :flowy [{:fun layout.flexlayout.store/save-layout :fixed :flexlayout-path :mode :clj}
-         {:fun layout.flexlayout.store/load-layout :fixed :flexlayout-path :mode :clj}
-         {:fun layout.flexlayout.store/layout-list :fixed :flexlayout-path :mode :clj}]
+ :flowy [{:fun layout.flexlayout.store/save-layout :fixed :flexlayout :mode :clj}
+         {:fun layout.flexlayout.store/load-layout :fixed :flexlayout :mode :clj}
+         {:fun layout.flexlayout.store/layout-list :fixed :flexlayout :mode :clj}]
  
  }
 

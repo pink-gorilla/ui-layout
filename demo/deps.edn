@@ -7,13 +7,19 @@
   ; webly
   org.pinkgorilla/webly {:mvn/version "0.9.724"} ; build tool
   org.pinkgorilla/extension {:mvn/version "0.0.16"}
-  org.pinkgorilla/ui-router {:mvn/version "0.2.40"}
+  ;org.pinkgorilla/ui-router {:mvn/version "0.2.40"}
+  org.pinkgorilla/ui-router {:mvn/version "0.2.43"}
   org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.12"}  ; notification 
   org.pinkgorilla/css-theme {:mvn/version "0.1.8"}
   org.pinkgorilla/ui-site {:mvn/version "0.0.31"}; ipsum
   org.pinkgorilla/ui-pprint-frisk {:mvn/version "0.6.565"} ; pprint is no longer contained there.
   org.pinkgorilla/flowy {:mvn/version "0.1.39"} ; flowy services
-  org.pinkgorilla/ui-layout {:local/root "../" :deps/manifest :deps}  }
+  org.pinkgorilla/ui-layout {:local/root "../" :deps/manifest :deps} 
+  
+  ; nrepl
+  nrepl/nrepl {:mvn/version "1.3.1"}
+  cider/cider-nrepl {:mvn/version "0.52.1"}
+  }
 
  :aliases
  {:lint2

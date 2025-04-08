@@ -46,9 +46,6 @@
                               ;:icon "/r/quanta/adjustments-vertical.svg"
                                     :enableClose false}]}]})
 
-(def layout-model
-  ;(.fromJson Model layout-json)
-  (Model.fromJson layout-json))
 
 (defn component-factory [^TabSetNode node]
   (let [component (.getComponent node)
@@ -79,37 +76,39 @@
                     ;   action
   action)
 
-(defonce layout-a (r/atom nil))
+(defonce state-a (r/atom nil))
 
-(defui app []
-  ($ :div
-     ($ :link {:href ;"https://unpkg.com/flexlayout-react/style/dark.css"
-               "https://unpkg.com/flexlayout-react/style/light.css"
-               :rel "stylesheet"})
-     ($ Layout
-        {:model layout-model
-         :factory component-factory
-         :onAction handle-action
-         :ref (fn [el]
-                (reset! layout-a el))
-         })))
+(defui flex-layout []
+  (let [model (Model.fromJson layout-json)]
+    ($ :div
+       ($ :link {:href ;"https://unpkg.com/flexlayout-react/style/dark.css"
+                 "https://unpkg.com/flexlayout-react/style/light.css"
+                 :rel "stylesheet"})
+       ($ Layout
+          {:model model
+           :factory component-factory
+           :onAction handle-action
+           :ref (fn [el]
+                  (reset! state-a {:layout el 
+                                   :model model
+                                   }))
+           }))))
 
 (defn mount []
   (let [root (uix.dom/create-root (js/document.getElementById "app"))]
-    (uix.dom/render-root ($ app) root)))
+    (uix.dom/render-root ($ flex-layout) root)))
 
 (defn page-nomenu [_match]
-  [:div ($ app)])
+  [:div ($ flex-layout)])
 
 (defn save-layout []
   (println "save-layout..")
-  (if @layout-a
+  (if @state-a
     (let [_ (println "layout found!")
-          ^Model layout-model layout-model
-          model-clj (js->clj (.toJson layout-model))
-          ]
+          ^Model model (:model @state-a)
+          model-clj (js->clj (.toJson model))]
       (println "model: " model-clj) 
-      (store/save-layout "bongo" model-clj))
+      (store/save-layout "willie" model-clj))
     (println "no layout found. - not saving")))
 
 (defn header []
@@ -136,6 +135,6 @@
                   :flex-grow "1"
                   :position "relative"
                   :border "1px solid #ddd"}}
-    [:div ($ app)]]])
+    [:div ($ flex-layout)]]])
 
 
