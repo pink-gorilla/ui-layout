@@ -1,14 +1,13 @@
-(ns demo.comp.size
+(ns layout.flexlayout.hooks.size
   (:require
-   [uix.core :refer [defhook]]
-   [uix.dom :as dom]))
+   [uix.core :refer [defhook]]))
 
-(defhook use-parent-size []
+(defhook use-size []
   (let [[size set-size!] (uix.core/use-state {:width 0 :height 0})
         ref (uix.core/use-ref nil)]
-    (uix.core/use-effect
+    (uix.core/use-layout-effect
      (fn []
-       (when-let [el (.-current ref)]
+       (when-let [el @ref]
          (let [parent (.-parentElement el)
                observer (js/ResizeObserver.
                          (fn [entries _]
@@ -20,19 +19,6 @@
            ;; Cleanup
            (fn []
              (.disconnect observer)))))
-     ;#js
      [])
-
-    ;; return a tuple: [ref size]
     [ref size]))
 
-
-;const [height, setHeight] = useState (null);
-;const [width, setWidth] = useState (null);
-;const div = useCallback (node => {if (node !== null) {setHeight (node.getBoundingClientRect () .height);
-;                                                      ;setWidth (node.getBoundingClientRect () .width);
-;                                                      }}, []);
-
-;return (<div ref= {div} >
-;             ...
-;             </div>)

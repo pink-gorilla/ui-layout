@@ -2,7 +2,9 @@
    (:require
     [uix.core :refer [$ defui]]
     [uix.dom]
-    [reagent.core :as r]))
+    [reagent.core :as r]
+    [layout.flexlayout.hooks.size :refer [use-size]]
+    ))
 
 
 (defui button [{:keys [on-click children]}]
@@ -48,3 +50,12 @@
     (finally
       (println "clock is destroyed.")
       (js/clearInterval interval-id))))
+
+
+
+(defui size-component []
+    (let [[ref size] (use-size)]
+      ($ :div {:ref ref
+               :style {:width "100%" :height "100%"}}
+         ($ :p (str "Parent size: " (pr-str size))))
+      ))

@@ -6,10 +6,10 @@
    ["flexlayout-react" :refer [Layout Model Actions  TabSetNode]]
    [layout.flexlayout.comp.option :refer [selected-id-a clj-option]]
    [layout.flexlayout.store :as store]
-   [demo.comp.flowy :refer [server-counter-component server-fortune-component
-                            ;size-component
-                            ]]
-   [demo.comp.demo :refer [button-component unknown-component url-component reagent-component reagent-clock]]))
+   [demo.comp.flowy :refer [server-counter-component server-fortune-component]]
+   [demo.comp.demo :refer [button-component unknown-component url-component reagent-component reagent-clock
+                           size-component
+                           ]]))
 
 (def layout-json
   #js {:global
@@ -63,7 +63,7 @@
       "server-counter" ($ :div (r/as-element [server-counter-component]))
       "server-fortune" ($ :div (r/as-element [server-fortune-component]))
       "clj-options" ($ :div (r/as-element [clj-option]))
-      ;"size" ($ size-component)
+      "size" ($ size-component)
       ($ unknown-component))))
 
 (defn handle-action [^js action]

@@ -2,9 +2,7 @@
   (:require
    [reagent.core :as r]
    [flowy.reflower :refer [task flow]]
-   [flowy.reagent :refer [flow->ratom]]
-   ;[demo.comp.size :refer [use-parent-size]]
-   ))
+   [flowy.reagent :refer [flow->ratom]]))
 
 (defn server-counter-component []
   (r/with-let [f (flow 'demo.counter/counter-fn)
@@ -28,9 +26,3 @@
        [:button {:on-click #(get-cookie)} "get fortune cookie"]
        [:p (str "cookie: " @state-a)]])))
 
-
-#_(defn size-component []
-  (let [[ref {:keys [width height]}] (use-parent-size)]
-    [:div {:ref ref
-           :style {:width "100%" :height "100%"}}
-     [:p (str "Parent size: " width "x" height)]]))
