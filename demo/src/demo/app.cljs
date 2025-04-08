@@ -20,6 +20,8 @@
     ["layout" {:name 'demo.page.layout/layout-page}]
     ["grid-layout" {:name 'demo.page.gridlayout/grid-layout-page}]
     ["flex-layout" {:name 'demo.page.flexlayout/flex-layout-page}]
+    ["flex-layout-uix" {:name 'demo.flexlayoutuix/page}]
+    
     ["spaces/"
      ["main" {:name 'demo.page.spaces/spaces-page}]
      ["layout-viewport-lrt" {:name 'demo.page.spaces/spaces-layout-lrt-viewport-page}]

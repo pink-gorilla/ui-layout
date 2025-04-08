@@ -10,14 +10,23 @@
   org.pinkgorilla/ui-router {:mvn/version "0.2.40"}
   org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.12"}  ; notification 
   org.pinkgorilla/css-theme {:mvn/version "0.1.8"}
-  ; extensions
-  org.pinkgorilla/ui-input {:local/root "../" :deps/manifest :deps}
   org.pinkgorilla/ui-site {:mvn/version "0.0.31"}; ipsum
   org.pinkgorilla/ui-pprint-frisk {:mvn/version "0.6.565"} ; pprint is no longer contained there.
-  }
+  org.pinkgorilla/flowy {:mvn/version "0.1.39"} ; flowy services
+  org.pinkgorilla/ui-layout {:local/root "../" :deps/manifest :deps}  }
 
  :aliases
- {; BUILD BUNDLE (then exit)
+ {:lint2
+  {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2025.04.07"}}
+   :main-opts ["-m" "clj-kondo.main"
+               "--config" ".clj-kondo/config.edn"
+               "--fail-level" "error"
+               "--lint"
+               "src"
+               ;"$(clojure -Spath)"
+               ]}
+  
+  ; BUILD BUNDLE (then exit)
   :webly {:extra-deps {}
           :extra-paths ["src" "resources" "test" "test/resources"]
           :exec-fn webly.spa/webly-build
@@ -41,6 +50,14 @@
               :exec-args {:config ["demo-config.edn"]
                           :profile "watch"
                           :services "demo-services.edn"}}
+  
+  :uix-flexlayout {:exec-fn modular.system/start!
+                   :exec-args {:config [{:spa {:title "uix-flexlayout demo"
+                                               :mount-fn demo.flexlayout-uix/mount}}]
+                               :profile "watch"
+                               :services "demo-services.edn"}}
+  
+
   
   }}
 
