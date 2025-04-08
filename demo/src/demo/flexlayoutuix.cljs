@@ -5,6 +5,7 @@
    [uix.dom]
    ["flexlayout-react" :refer [Layout Model Actions  TabSetNode]]
    [layout.flexlayout.comp.option :refer [selected-id-a clj-option]]
+   [layout.flexlayout.store :as store]
    [demo.comp.flowy :refer [server-counter-component server-fortune-component
                             ;size-component
                             ]]
@@ -78,6 +79,8 @@
                     ;   action
   action)
 
+(defonce layout-a (r/atom nil))
+
 (defui app []
   ($ :div
      ($ :link {:href ;"https://unpkg.com/flexlayout-react/style/dark.css"
@@ -86,16 +89,53 @@
      ($ Layout
         {:model layout-model
          :factory component-factory
-         :onAction handle-action})))
+         :onAction handle-action
+         :ref (fn [el]
+                (reset! layout-a el))
+         })))
 
 (defn mount []
   (let [root (uix.dom/create-root (js/document.getElementById "app"))]
     (uix.dom/render-root ($ app) root)))
 
-(defn page [_match]
+(defn page-nomenu [_match]
   [:div ($ app)])
 
+(defn save-layout []
+  (println "save-layout..")
+  (if @layout-a
+    (let [_ (println "layout found!")
+          ^Model layout-model layout-model
+          model-clj (js->clj (.toJson layout-model))
+          ]
+      (println "model: " model-clj) 
+      (store/save-layout "bongo" model-clj))
+    (println "no layout found. - not saving")))
 
+(defn header []
+  [:div {:style {:background "red"
+                 :height "60px"}}
+   [:button {:on-click #(save-layout)} "save"]])
 
+(defn page [_match]
+  [:div  {:style {:height "100vh"
+                  :width "100vw"
+                  :top "0"
+                  :left "0"
+                  :margin "0"
+                  :padding "0"
+                  :display "flex"
+                  :flex-direction "column"
+                  :flex-grow 1}}
+   [:div {:dir "ltr"
+          :style {:margin "2px"
+                  :display "flex"
+                  :align-items "center"}}
+    [header]]
+   [:div {:style {:display "flex"
+                  :flex-grow "1"
+                  :position "relative"
+                  :border "1px solid #ddd"}}
+    [:div ($ app)]]])
 
 
