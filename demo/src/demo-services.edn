@@ -9,7 +9,7 @@
                    (:timbre/clj (clip/ref :config)))}
   
   :exec {:start (flowy.executor/start-executor
-                 {:env {}
+                 {:env {:flexlayout-path ".flexlayout"}
                   :exts (clip/ref :exts)}
                  (:services (clip/ref :config)))}
 

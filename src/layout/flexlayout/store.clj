@@ -14,13 +14,13 @@
     (when (and layout-dir (fs/exists? filename))
       (-> (slurp filename) (edn/read-string)))))
 
-(defn files [{:keys [layout-dir]}]
+(defn layout-list [{:keys [layout-dir]}]
   (->> (fs/list-dir layout-dir "*.edn")
        (map fs/file-name)
        (map #(subs % 0 (- (count %) 4)))))
 
 (comment
-  (files {:layout-dir ".data/public/layout"})
+  (layout-list {:layout-dir ".data/public/layout"})
 
 ; 
   )
