@@ -4,8 +4,8 @@
    [uix.core :refer [$ defui defhook]]
    [uix.dom]
    ["flexlayout-react" :refer [Layout Model Actions  TabSetNode]]
-   [layout.flexlayout.comp.option :refer [selected-id-a clj-option]]
-   [layout.flexlayout.store :as store]
+   [layout.flexlayout.core :refer [flex-layout save-layout]]
+   [layout.flexlayout.comp.option :refer [clj-option]]
    [demo.comp.flowy :refer [server-counter-component server-fortune-component]]
    [demo.comp.demo :refer [button-component unknown-component url-component reagent-component reagent-clock
                            size-component
@@ -63,53 +63,16 @@
       "size" ($ size-component)
       ($ unknown-component))))
 
-(defn handle-action [^js action]
-  (when (= Actions.SELECT_TAB (.-type action))
-    (let [cell-id (-> action .-data .-tabNode)]
-      (println "selected tab: " cell-id)
-      (reset! selected-id-a cell-id)
-      js/undefined))
-                    ; (if (= FlexLayout.Actions.DELETE_TAB (.-type action))
-                    ;   (let [cell-id (-> action .-data .-node)]
-                    ;     (println "cell deleted: " cell-id)   
-                    ;     js/undefined)
-                    ;   action
-  action)
-
-(defonce state-a (r/atom nil))
-
-(defui flex-layout []
-  (let [model (Model.fromJson layout-json)]
-    ($ :div
-       ($ :link {:href ;"https://unpkg.com/flexlayout-react/style/dark.css"
-                 "https://unpkg.com/flexlayout-react/style/light.css"
-                 :rel "stylesheet"})
-       ($ Layout
-          {:model model
-           :factory component-factory
-           :onAction handle-action
-           :ref (fn [el]
-                  (reset! state-a {:layout el 
-                                   :model model
-                                   }))
-           }))))
 
 (defn mount []
   (let [root (uix.dom/create-root (js/document.getElementById "app"))]
-    (uix.dom/render-root ($ flex-layout) root)))
+    (uix.dom/render-root ($ flex-layout {:layout-json layout-json
+                                         :component-factory component-factory}) root)))
 
 (defn page-nomenu [_match]
   [:div ($ flex-layout)])
 
-(defn save-layout []
-  (println "save-layout..")
-  (if @state-a
-    (let [_ (println "layout found!")
-          ^Model model (:model @state-a)
-          model-clj (js->clj (.toJson model))]
-      (println "model: " model-clj) 
-      (store/save-layout "willie" model-clj))
-    (println "no layout found. - not saving")))
+
 
 (defn header []
   [:div {:style {:background "red"
@@ -135,6 +98,7 @@
                   :flex-grow "1"
                   :position "relative"
                   :border "1px solid #ddd"}}
-    [:div ($ flex-layout)]]])
+    [:div ($ flex-layout {:layout-json layout-json
+                          :component-factory component-factory})]]])
 
 

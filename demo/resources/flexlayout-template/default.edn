@@ -1,1 +1,33 @@
-{:msg "empty template"}
+{:global
+ {:tabEnableClose true}
+ :layout
+ {:type "row"
+  :children [ {:type "tabset"
+               :children  [ {:type "tab" :name "uixcount1" :component "uixcounter"}
+                            {:type "tab" :name "uixcount2" :component "uixcounter"}
+                            {:type "tab" :name "wikipedia" :component "url"
+                                :config "https://en.wikipedia.org/wiki/Main_Page"}
+                            {:type "tab" :name "uixcount3" :component "uixcounter"}
+                            {:type "tab" :name "rcount1" :component "reagent-counter"}
+                            {:type "tab" :name "rcount2" :component "reagent-counter"}
+                            {:type "tab" :name "rclock1" :component "reagent-clock"}
+                            {:type "tab" :name "rclock2" :component "reagent-clock"}
+                            {:type "tab" :name "scounter1" :component "server-counter"}
+                            {:type "tab" :name "scounter2" :component "server-counter"}
+                            {:type "tab" :name "scounter3" :component "server-counter"}
+                            {:type "tab" :name "sfortune1" :component "server-fortune"}
+                            {:type "tab" :name "sfortune2" :component "server-fortune"}
+                            {:type "tab" :name "size1" :component "size"}
+                            {:type "tab" :name "size2" :component "size"}]}]}
+
+ :borders
+  [{:type "border"
+                 ;:selected 13,
+          :size 350
+          :location "left"
+          :children  [ {:type "tab"
+                        :id "options"
+                        :name "Options"
+                        :component "clj-options"
+                        ;:icon "/r/quanta/adjustments-vertical.svg"
+                        :enableClose false}]}]}

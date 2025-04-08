@@ -5,8 +5,8 @@
    [frontend.notification :refer [notification-container]]
    [frontend.dialog :refer [modal-container]]
    [webly.spa.env :refer [get-resource-path]]
-   [reagent.core :as r]
-   [layout.flexlayout.store :refer [load-layout->atom]]
+   [layout.flexlayout.core :refer [flexlayout-model-load create-flexlayout-page]]
+   [demo.flexlayoutuix :refer [component-factory header]]
    ))
 
 (defn wrap-app [page match]
@@ -15,23 +15,12 @@
    [notification-container]
    [css-loader (get-resource-path)]
    [page match]])
-
-(def layout-model-a (r/atom nil))
-
-(defn flexlayout-model-load [opts]
-  (info "flexlayout model load: " opts)
-  (load-layout->atom layout-model-a (get-in opts [:path :model])))
-
-(defn flexlayout-model [{:keys [parameters]}]
-  [:div 
-   [:h1 "flexlayout"]
-   [:h1 "parameters"]
-   [:p (pr-str parameters)]
-   [:h1 "model"]
-   [:hr]
-   [:p (pr-str @layout-model-a)]
-   ])
   
+
+(def flexlayout-page 
+  (create-flexlayout-page {:component-factory component-factory
+                           :header header}))
+
 (def routes
   [["/"
     ["" {:name 'demo.page.welcome/welcome-page}]
@@ -43,10 +32,8 @@
     ["flex-layout-uix" {:name 'demo.flexlayoutuix/page}]
     ["flex-layout-uix/:model" {:name 'demo.flexlayoutuix/page-model
                                :controllers [{:parameters {:path [:model]}
-                                              :start flexlayout-model-load
-                                              ;:stop (log-fn "stop" "flexlayout-model controller")
-                                              }]
-                               :view flexlayout-model}]
+                                              :start flexlayout-model-load}]
+                               :view flexlayout-page}]
     
     ["spaces/"
      ["main" {:name 'demo.page.spaces/spaces-page}]
