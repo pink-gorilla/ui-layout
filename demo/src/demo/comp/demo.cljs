@@ -51,17 +51,19 @@
 (defmethod component-ui "reagent-counter" [opts]
   ($ :div (r/as-element [reagent-component])))
   
-(defn reagent-clock []
+(defn reagent-clock [{:keys [state]}]
   (r/with-let [_ (println "reagent-clock is created.")
                counter (r/atom 0)
                interval-id (js/setInterval #(swap! counter inc) 1000)]  ; Side effect (runs once)
-    [:div "Clock: " @counter]
+    (let [c (or (get-in @state [:value :background-color]) "black")]
+      [:div {:style {:background-color c}}
+       "Clock: " @counter])
     (finally
       (println "clock is destroyed.")
       (js/clearInterval interval-id))))
 
 (defmethod component-ui "reagent-clock" [opts]
-  ($ :div (r/as-element [reagent-clock])))
+  ($ :div (r/as-element [reagent-clock opts])))
  
 
 (defui size-component []

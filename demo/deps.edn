@@ -4,16 +4,15 @@
          ]
  :deps
  {org.clojure/clojure    {:mvn/version "1.11.1"}
-  ; webly
+  ; pink-gorilla
   org.pinkgorilla/webly {:mvn/version "0.9.724"} ; build tool
   org.pinkgorilla/extension {:mvn/version "0.0.16"}
-  ;org.pinkgorilla/ui-router {:mvn/version "0.2.40"}
   org.pinkgorilla/ui-router {:mvn/version "0.2.43"}
   org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.12"}  ; notification 
   org.pinkgorilla/css-theme {:mvn/version "0.1.8"}
   org.pinkgorilla/ui-site {:mvn/version "0.0.31"}; ipsum
   org.pinkgorilla/ui-pprint-frisk {:mvn/version "0.6.565"} ; pprint is no longer contained there.
-  org.pinkgorilla/flowy {:mvn/version "0.1.39"} ; flowy services
+  ; this library
   org.pinkgorilla/ui-layout {:local/root "../" :deps/manifest :deps} 
   
   ; nrepl

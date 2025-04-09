@@ -1,7 +1,10 @@
 {:name "ui-flexlayout"
  ; build
  :lazy true
- :cljs-namespace [ui.flexlayout]
+ :depends-on #{:nano-id}
+ :cljs-namespace [ui.flexlayout
+                  layout.flexlayout.core
+                  ]
  :cljs-ns-bindings {'ui.flexlayout {'create-model ui.flexlayout/create-model
                                     'layout ui.flexlayout/layout
                                     'add-node ui.flexlayout/add-node

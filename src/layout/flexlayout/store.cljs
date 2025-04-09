@@ -1,6 +1,6 @@
 (ns layout.flexlayout.store
   (:require
-    [taoensso.timbre :refer-macros [debug info error]]
+   [taoensso.timbre :refer-macros [debug info error]]
    [reagent.core :as r]
    [flowy.reflower :refer [task]]))
 
@@ -10,7 +10,6 @@
          (println "layout saved successfully."))
        (fn [err]
          (println "could not save layout error: " err)))))
-
 
 (defn load-layout->atom [a layout-name]
   (let [t (task 'layout.flexlayout.store/load-layout layout-name)]

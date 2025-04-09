@@ -14,7 +14,7 @@
                   demo.page.tab
                   demo.page.golden
                   demo.app
-                  demo.flexlayoutuix]
+                  demo.page.flexlayoutuix]
  :cljs-ns-bindings {'demo.page.welcome {'welcome-page  demo.page.welcome/welcome-page}
                     ;'demo.page.input {'welcome-page  demo.page.input/input-page}
                     'demo.page.desclist {'desclist-page  demo.page.desclist/desclist-page}
@@ -31,8 +31,8 @@
                     'demo.page.golden {'page  demo.page.golden/page}
                     'demo.app {'routes demo.app/routes
                                'wrap-app demo.app/wrap-app}
-                    'demo.flexlayoutuix {'mount demo.flexlayoutuix/mount
-                                         'page demo.flexlayoutuix/page}}
+                    'demo.page.flexlayoutuix {'mount demo.page.flexlayoutuix/mount
+                                              'page demo.page.flexlayoutuix/page}}
  ; runtime
  :cljs-routes-reitit demo.app/routes 
 

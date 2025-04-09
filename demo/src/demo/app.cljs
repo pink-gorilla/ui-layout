@@ -6,7 +6,7 @@
    [frontend.dialog :refer [modal-container]]
    [webly.spa.env :refer [get-resource-path]]
    [layout.flexlayout.core :refer [flexlayout-model-load create-flexlayout-page]]
-   [demo.flexlayoutuix :refer [flexlayout-page]]
+   [demo.page.flexlayoutuix :refer [flexlayout-page]]
    ))
 
 (defn wrap-app [page match]
@@ -26,8 +26,8 @@
     ["layout" {:name 'demo.page.layout/layout-page}]
     ["grid-layout" {:name 'demo.page.gridlayout/grid-layout-page}]
     ["flex-layout" {:name 'demo.page.flexlayout/flex-layout-page}]
-    ["flex-layout-uix" {:name 'demo.flexlayoutuix/page}]
-    ["flex-layout-uix/:model" {:name 'demo.flexlayoutuix/page-model
+    ["flex-layout-uix" {:name 'demo.page.flexlayoutuix/page}]
+    ["flex-layout-uix/:model" {:name 'demo.page.flexlayoutuix/page-model
                                :controllers [{:parameters {:path [:model]}
                                               :start flexlayout-model-load}]
                                :view flexlayout-page}]

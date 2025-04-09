@@ -1,14 +1,24 @@
 (ns layout.flexlayout.core
-   (:require
-    [taoensso.timbre :refer-macros [debug info error]]
-    [reagent.core :as r]
-    [uix.core :refer [$ defui defhook]]
-    [uix.dom]
-    ["flexlayout-react" :refer [Layout Model Actions  TabSetNode]]
-    [layout.flexlayout.comp.option :refer [selected-id-a selected-node-a]]
-    [layout.flexlayout.store :as store]
-    [layout.flexlayout.comp :refer [component-ui]]
-    ))
+  (:require
+   [taoensso.timbre :refer-macros [debug info error]]
+   [reagent.core :as r]
+   [reagent.ratom :as ratom]
+   [nano-id.core :refer [nano-id]]
+   [uix.core :refer [$ defui defhook]]
+   [uix.dom]
+   ["flexlayout-react" :refer [Layout Model Actions  TabSetNode]]
+   [layout.flexlayout.store :as store]
+   [layout.flexlayout.comp :refer [component-ui]]))
+
+(defonce state-a (r/atom {:data-a (r/atom {}) ; make sure subscrie-state always has defined value (being too careful here?)
+                          }))
+
+(defn subscribe-state [id]
+  (let [data-a (:data-a @state-a)]
+    (ratom/make-reaction
+     (fn [] (get @data-a id)))))
+
+
 
 (defn component-factory [^TabSetNode node]
   (let [component (.getComponent node)
@@ -16,9 +26,13 @@
         config (.getConfig node)
         opts {:component component
               :id id 
-              :config config}]
+              :config config
+              :state (subscribe-state id)}]
     ;(println "component factory component: " opts)
     (component-ui opts)))
+
+(defonce selected-id-a (r/atom nil))
+
 
 (defn handle-action [^js action]
   (when (= Actions.SELECT_TAB (.-type action))
@@ -27,13 +41,13 @@
       (reset! selected-id-a cell-id)
             js/undefined))
   (when (= Actions.DELETE_TAB (.-type action))
-     (let [cell-id (-> action .-data .-node)] ; here it is called node, above tabnNode, but both get the id
+     (let [data-a (:data-a @state-a)
+           cell-id (-> action .-data .-node)] ; here it is called node, above tabnNode, but both get the id
        (println "cell deleted: " cell-id)   
+       (swap! data-a dissoc cell-id)
        js/undefined))
   ;   action
   action)
-
-(defonce state-a (r/atom nil))
 
 (defui flex-layout [{:keys [layout-json model-name data]
                      :or {model-name "unknown"
@@ -52,6 +66,29 @@
                                    :model-name model-name
                                    :data-a (r/atom data)
                                    }))}))))
+
+
+
+(defn add-node [{:keys [id state]
+                 :or {id (nano-id 5)}
+                 :as node}]
+  (let [model (:model @state-a)
+        layout (:layout @state-a)
+        data-a (:data-a @state-a)
+        node (assoc node :id id)]
+  ;  {:type "tab" :name "wikipedia" :component "url"
+  ;                              :config "https://en.wikipedia.org/wiki/Main_Page"}
+    (println "adding new node to layout..")
+    (when state
+      (swap! data-a assoc id state))
+    (let [tabset (or (.getActiveTabset  ^Model model)
+                     (.getFirstTabSet  ^Model model))]
+      (.addTabToTabSet
+       ^Model
+       layout
+       (.getId ^TabSetNode tabset)
+       (clj->js node)))))
+
 
 (defn save-layout []
   (println "save-layout..")
