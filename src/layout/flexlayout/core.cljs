@@ -5,34 +5,31 @@
     [uix.core :refer [$ defui defhook]]
     [uix.dom]
     ["flexlayout-react" :refer [Layout Model Actions  TabSetNode]]
-    [layout.flexlayout.comp.option :refer [selected-id-a clj-option]]
+    [layout.flexlayout.comp.option :refer [selected-id-a selected-node-a clj-option]]
     [layout.flexlayout.store :as store]
     ))
-
-
-(defonce state-a (r/atom nil))
 
 (defn handle-action [^js action]
   (when (= Actions.SELECT_TAB (.-type action))
     (let [cell-id (-> action .-data .-tabNode)]
       (println "selected tab: " cell-id)
       (reset! selected-id-a cell-id)
-      js/undefined))
-                    ; (if (= FlexLayout.Actions.DELETE_TAB (.-type action))
-                    ;   (let [cell-id (-> action .-data .-node)]
-                    ;     (println "cell deleted: " cell-id)   
-                    ;     js/undefined)
-                    ;   action
+            js/undefined))
+  (when (= Actions.DELETE_TAB (.-type action))
+     (let [cell-id (-> action .-data .-node)] ; here it is called node, above tabnNode, but both get the id
+       (println "cell deleted: " cell-id)   
+       js/undefined))
+  ;   action
   action)
 
+(defonce state-a (r/atom nil))
 
-(defui flex-layout [{:keys [layout-json component-factory model-name]
-                     :or {model-name "unknown"}}]
+(defui flex-layout [{:keys [layout-json component-factory model-name data]
+                     :or {model-name "unknown"
+                          data {}}}]
   (let [model (Model.fromJson layout-json)]
     ($ :div
-       ($ :link {:href ;"https://unpkg.com/flexlayout-react/style/dark.css"
-                 ;"https://unpkg.com/flexlayout-react/style/light.css"
-                 "/r/flexlayout-react/style/light.css"
+       ($ :link {:href "/r/flexlayout-react/style/light.css"
                  :rel "stylesheet"})
        ($ Layout
           {:model model
@@ -42,6 +39,7 @@
                   (reset! state-a {:layout el
                                    :model model
                                    :model-name model-name
+                                   :data-a (r/atom data)
                                    }))}))))
 
 (defn save-layout []
@@ -52,16 +50,17 @@
           model-name (:model-name @state-a)
           model-clj (js->clj (.toJson model))]
       (println "model: " model-clj)
-      (store/save-layout model-name model-clj))
+      (store/save-layout model-name {:data @(:data-a @state-a)
+                                     :model model-clj}))
     (println "no layout found. - not saving")))
 
 ;; page helper
 
-(def layout-model-a (r/atom nil))
+(def layout-data-model-a (r/atom nil))
 
 (defn flexlayout-model-load [opts]
   (info "flexlayout model load: " opts)
-  (store/load-layout->atom layout-model-a (get-in opts [:path :model])))
+  (store/load-layout->atom layout-data-model-a (get-in opts [:path :model])))
 
 (defn flexlayout-with-header [header flexlayout-opts]
   [:div  {:style {:height "100vh"
@@ -89,12 +88,14 @@
 
 (defn create-flexlayout-page [{:keys [component-factory header]}]
  (fn [{:keys [parameters] :as match}]
-   (if-let [model @layout-model-a] 
+   (if-let [{:keys [model data]} @layout-data-model-a] 
      (let [model-js (clj->js model)
            model-name (get-in parameters [:path :model])
            flexlayout-opts {:component-factory component-factory
                             :layout-json model-js
-                            :model-name model-name}]
+                            :model-name model-name
+                            :data data
+                            }]
        (println "model started: " model-name)
        (if header 
          [flexlayout-with-header header flexlayout-opts]

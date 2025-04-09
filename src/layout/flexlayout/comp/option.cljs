@@ -6,6 +6,8 @@
 
 (defonce selected-id-a (r/atom nil))
 
+(defonce selected-node-a (r/atom nil))
+
 (defn clj-option [_]
   [:div
    [:hr]

@@ -1,3 +1,5 @@
+{:data {}
+ :model
 {:global
  {:tabEnableClose true}
  :layout
@@ -30,4 +32,4 @@
                         :name "Options"
                         :component "clj-options"
                         ;:icon "/r/quanta/adjustments-vertical.svg"
-                        :enableClose false}]}]}
+                        :enableClose false}]}]}}

@@ -76,7 +76,7 @@
 
 (defn header []
   [:div {:style {:background "red"
-                 :height "60px"}}
+                 :height "1.5em"}}
    [:button {:on-click #(save-layout)} "save"]])
 
 (defn page [_match]

@@ -16,7 +16,7 @@
   (let [t (task 'layout.flexlayout.store/load-layout layout-name)]
     (t (fn [data]
          (info "layout loaded: " layout-name)
-         (info "layout data:" data)
+         ;(info "layout data:" data)
          (reset! a data))
        (fn [err]
          (println "layout load error: " layout-name " error: " err)))))
