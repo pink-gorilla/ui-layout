@@ -5,9 +5,20 @@
     [uix.core :refer [$ defui defhook]]
     [uix.dom]
     ["flexlayout-react" :refer [Layout Model Actions  TabSetNode]]
-    [layout.flexlayout.comp.option :refer [selected-id-a selected-node-a clj-option]]
+    [layout.flexlayout.comp.option :refer [selected-id-a selected-node-a]]
     [layout.flexlayout.store :as store]
+    [layout.flexlayout.comp :refer [component-ui]]
     ))
+
+(defn component-factory [^TabSetNode node]
+  (let [component (.getComponent node)
+        id (.getId node)
+        config (.getConfig node)
+        opts {:component component
+              :id id 
+              :config config}]
+    ;(println "component factory component: " opts)
+    (component-ui opts)))
 
 (defn handle-action [^js action]
   (when (= Actions.SELECT_TAB (.-type action))
@@ -24,7 +35,7 @@
 
 (defonce state-a (r/atom nil))
 
-(defui flex-layout [{:keys [layout-json component-factory model-name data]
+(defui flex-layout [{:keys [layout-json model-name data]
                      :or {model-name "unknown"
                           data {}}}]
   (let [model (Model.fromJson layout-json)]
@@ -86,12 +97,12 @@
 (defn flexlayout-only [flexlayout-opts]
   ($ flex-layout flexlayout-opts))
 
-(defn create-flexlayout-page [{:keys [component-factory header]}]
+(defn create-flexlayout-page [{:keys [header]}]
  (fn [{:keys [parameters] :as match}]
    (if-let [{:keys [model data]} @layout-data-model-a] 
      (let [model-js (clj->js model)
            model-name (get-in parameters [:path :model])
-           flexlayout-opts {:component-factory component-factory
+           flexlayout-opts {;:component-factory component-factory
                             :layout-json model-js
                             :model-name model-name
                             :data data

@@ -6,7 +6,7 @@
    [frontend.dialog :refer [modal-container]]
    [webly.spa.env :refer [get-resource-path]]
    [layout.flexlayout.core :refer [flexlayout-model-load create-flexlayout-page]]
-   [demo.flexlayoutuix :refer [component-factory header]]
+   [demo.flexlayoutuix :refer [flexlayout-page]]
    ))
 
 (defn wrap-app [page match]
@@ -17,9 +17,6 @@
    [page match]])
   
 
-(def flexlayout-page 
-  (create-flexlayout-page {:component-factory component-factory
-                           :header header}))
 
 (def routes
   [["/"

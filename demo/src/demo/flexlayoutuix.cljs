@@ -3,13 +3,11 @@
    [reagent.core :as r]
    [uix.core :refer [$ defui defhook]]
    [uix.dom]
-   ["flexlayout-react" :refer [Layout Model Actions  TabSetNode]]
-   [layout.flexlayout.core :refer [flex-layout save-layout]]
-   [layout.flexlayout.comp.option :refer [clj-option]]
-   [demo.comp.flowy :refer [server-counter-component server-fortune-component]]
-   [demo.comp.demo :refer [button-component unknown-component url-component reagent-component reagent-clock
-                           size-component
-                           ]]))
+   [layout.flexlayout.core :refer [flex-layout save-layout create-flexlayout-page flexlayout-model-load]]
+   [layout.flexlayout.comp.option] ; side effects
+   [demo.comp.flowy] ; side effects
+   [demo.comp.demo ] ; side effects
+   ))
 
 (def layout-json
   #js {:global
@@ -47,27 +45,9 @@
                                     :enableClose false}]}]})
 
 
-(defn component-factory [^TabSetNode node]
-  (let [component (.getComponent node)
-        id (.getId node)
-        config (.getConfig node)]
-    (println "component factory component: " component " id: " id " config: " config)
-    (case component
-      "uixcounter" ($ button-component)
-      "url" ($ url-component {:url config})
-      "reagent-counter" ($ :div (r/as-element [reagent-component]))
-      "reagent-clock" ($ :div (r/as-element [reagent-clock]))
-      "server-counter" ($ :div (r/as-element [server-counter-component]))
-      "server-fortune" ($ :div (r/as-element [server-fortune-component]))
-      "clj-options" ($ :div (r/as-element [clj-option]))
-      "size" ($ size-component)
-      ($ unknown-component))))
-
-
 (defn mount []
   (let [root (uix.dom/create-root (js/document.getElementById "app"))]
-    (uix.dom/render-root ($ flex-layout {:layout-json layout-json
-                                         :component-factory component-factory}) root)))
+    (uix.dom/render-root ($ flex-layout {:layout-json layout-json}) root)))
 
 (defn page-nomenu [_match]
   [:div ($ flex-layout)])
@@ -98,7 +78,9 @@
                   :flex-grow "1"
                   :position "relative"
                   :border "1px solid #ddd"}}
-    [:div ($ flex-layout {:layout-json layout-json
-                          :component-factory component-factory})]]])
+    [:div ($ flex-layout {:layout-json layout-json})]]])
 
+
+(def flexlayout-page
+  (create-flexlayout-page {:header header}))
 

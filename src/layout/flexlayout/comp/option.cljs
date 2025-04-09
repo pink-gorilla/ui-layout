@@ -1,8 +1,10 @@
 (ns layout.flexlayout.comp.option
   (:require 
    [reagent.core :as r]
-   [options.flowy.core :refer [clj-option-ui]]))
-
+   [uix.core :refer [$ defui]]
+   [options.flowy.core :refer [clj-option-ui]]
+   [layout.flexlayout.comp :refer [component-ui]]
+   ))
 
 (defonce selected-id-a (r/atom nil))
 
@@ -23,4 +25,8 @@
                                                             ;:min-width "400px"
                            :height "400px"
                            :width "400px"}}]])
+
+
+(defmethod component-ui "clj-options" [opts]
+  ($ :div (r/as-element [clj-option])))
 

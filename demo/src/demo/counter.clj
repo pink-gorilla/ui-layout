@@ -13,5 +13,6 @@
        (recur (inc i)))))))
 
 (defn counter-fn []
+  (println "returning counter-fn")
   counter)
   
