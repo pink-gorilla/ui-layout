@@ -6,45 +6,47 @@
    [clojure.java.io :as io]
    [modular.fipp :refer [pprint-str]]))
 
-(defn filename-layout [{:keys [store-path]} layout-name]
+(defn filename-layout [{:keys [store-path]} category layout-name]
   (str store-path 
        (if (str/ends-with? store-path "/") "" "/")
+       category "/"
        layout-name ".edn"))
 
-(defn save-layout [{:keys [store-path] :as this} layout-name layout-data]
+(defn save-layout [{:keys [store-path] :as this} category layout-name layout-data]
   (if store-path
-    (let [filename (filename-layout this layout-name)]
+    (let [filename (filename-layout this category layout-name)]
       (fs/create-dirs store-path)
       (println "saving layout to file: " filename)
       (spit filename (pprint-str layout-data)))
     (println "not saving layout " layout-name " - no layout-dir defined."))
   :done)
 
-(defn load-template [{:keys [store-path template-resource-path]}]
-  (-> (str template-resource-path "/default.edn")
+(defn load-template [{:keys [template-resource-path]} category]
+  (-> (str template-resource-path "/" category ".edn")
       (io/resource)
       (slurp) 
       (edn/read-string)))
 
-(defn load-layout [{:keys [store-path] :as this} layout-name]
-  (let [filename  (filename-layout this layout-name)]
+(defn load-layout [{:keys [store-path] :as this} category layout-name]
+  (let [filename  (filename-layout this category layout-name)]
     (if (and store-path (fs/exists? filename))
       (-> (slurp filename) (edn/read-string))
-      (load-template this))))
+      (load-template this category))))
 
-(defn layout-list [{:keys [store-path]}]
-  (->> (fs/list-dir store-path "*.edn")
-       (map fs/file-name)
-       (map #(subs % 0 (- (count %) 4)))))
+(defn layout-list [{:keys [store-path]} category]
+  (let [path (str store-path "/" category)]
+    (->> (fs/list-dir path  "*.edn")
+         (map fs/file-name)
+         (map #(subs % 0 (- (count %) 4))))))
 
 (comment
   (def this {:store-path ".flexlayout"
              :template-resource-path "flexlayout-template"})
 
-  (layout-list this)
+  (layout-list this "default")
 
-  (load-layout this "bongo")
-  (load-layout this "hugo")
+  (load-layout this "default" "bongo")
+  (load-layout this "defailt" "hugo")
 
 ; 
   )

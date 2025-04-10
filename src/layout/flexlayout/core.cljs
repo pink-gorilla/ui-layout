@@ -49,8 +49,9 @@
   ;   action
   action)
 
-(defui flex-layout [{:keys [layout-json model-name data]
-                     :or {model-name "unknown"
+(defui flex-layout [{:keys [layout-json category model-name data]
+                     :or {category "default"
+                          model-name "unknown"
                           data {}}}]
   (let [model (Model.fromJson layout-json)]
     ($ :div
@@ -63,6 +64,7 @@
            :ref (fn [el]
                   (reset! state-a {:layout el
                                    :model model
+                                   :category category
                                    :model-name model-name
                                    :data-a (r/atom data)
                                    }))}))))
@@ -94,11 +96,12 @@
   (println "save-layout..")
   (if @state-a
     (let [_ (println "layout found!")
-          ^Model model (:model @state-a)
+          ^Model model (:model @state-a) 
+          category (:category @state-a)
           model-name (:model-name @state-a)
           model-clj (js->clj (.toJson model))]
       (println "model: " model-clj)
-      (store/save-layout model-name {:data @(:data-a @state-a)
+      (store/save-layout category model-name {:data @(:data-a @state-a)
                                      :model model-clj}))
     (println "no layout found. - not saving")))
 
@@ -107,8 +110,10 @@
 (def layout-data-model-a (r/atom nil))
 
 (defn flexlayout-model-load [opts]
-  (info "flexlayout model load: " opts)
-  (store/load-layout->atom layout-data-model-a (get-in opts [:path :model])))
+  (let [model (get-in opts [:path :model])
+        category (:category opts)]
+  (info "flexlayout model load: category: " category " model: " model)
+  (store/load-layout->atom layout-data-model-a category model)))
 
 (defn flexlayout-with-header [header flexlayout-opts]
   [:div  {:style {:height "100vh"
@@ -137,19 +142,20 @@
 (defn create-flexlayout-page [{:keys [header]}]
  (fn [{:keys [parameters] :as match}]
    (if-let [{:keys [model data]} @layout-data-model-a] 
-     (let [model-js (clj->js model)
+     (let [category (get-in match [:data :category])
+           model-js (clj->js model)
            model-name (get-in parameters [:path :model])
            flexlayout-opts {;:component-factory component-factory
                             :layout-json model-js
+                            :category category
                             :model-name model-name
                             :data data
                             }]
-       (println "model started: " model-name)
+       (println "model started: " model-name " category: " category)
        (if header 
          [flexlayout-with-header header flexlayout-opts]
          [flexlayout-only flexlayout-opts]))
      [:div
       "loaded model is nil."
       ])))
-
 

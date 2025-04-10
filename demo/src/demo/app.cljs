@@ -5,7 +5,8 @@
    [frontend.notification :refer [notification-container]]
    [frontend.dialog :refer [modal-container]]
    [webly.spa.env :refer [get-resource-path]]
-   [layout.flexlayout.core :refer [flexlayout-model-load create-flexlayout-page]]
+   [layout.flexlayout.core :refer [flexlayout-model-load create-flexlayout-page ]]
+   [layout.flexlayout.overview :refer [flexlayout-models-load flexlayout-overview-page]]
    [demo.page.flexlayoutuix :refer [flexlayout-page]]
    ))
 
@@ -17,7 +18,6 @@
    [page match]])
   
 
-
 (def routes
   [["/"
     ["" {:name 'demo.page.welcome/welcome-page}]
@@ -26,11 +26,21 @@
     ["layout" {:name 'demo.page.layout/layout-page}]
     ["grid-layout" {:name 'demo.page.gridlayout/grid-layout-page}]
     ["flex-layout" {:name 'demo.page.flexlayout/flex-layout-page}]
-    ["flex-layout-uix" {:name 'demo.page.flexlayoutuix/page}]
-    ["flex-layout-uix/:model" {:name 'demo.page.flexlayoutuix/page-model
-                               :controllers [{:parameters {:path [:model]}
-                                              :start flexlayout-model-load}]
-                               :view flexlayout-page}]
+    ["flex-layout-uix" {:category "demo27"
+                        :link :flexlayout}
+     ["" {:name :flexlayout-overview
+          :controllers [{:identity (fn [match]
+                                     {:category (get-in match [:data :category])
+                                      :link (get-in match [:data :link])})
+                         :start flexlayout-models-load}]
+          :view flexlayout-overview-page}] 
+      ["/:model" {:name :flexlayout
+                  :controllers [{;:parameters {:path [:model]}
+                                 :identity (fn [match]
+                                             {:category (get-in match [:data :category])
+                                              :path {:model (get-in match [:parameters :path :model])} })
+                                 :start flexlayout-model-load}]
+                  :view flexlayout-page}]]
     
     ["spaces/"
      ["main" {:name 'demo.page.spaces/spaces-page}]
@@ -42,5 +52,3 @@
     ["sidebartree" {:name 'demo.page.sidebartree/sidebar-page}]
     ["tab" {:name 'demo.page.tab/tab-page}]
     ["golden" {:name 'demo.page.golden/page}]]])
-
-  

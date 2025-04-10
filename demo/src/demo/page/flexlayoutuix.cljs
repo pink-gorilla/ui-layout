@@ -9,48 +9,6 @@
    [demo.comp.demo ] ; side effects
    ))
 
-(def layout-json
-  #js {:global
-       #js {:tabEnableClose true}
-       :layout
-       #js {:type "row"
-            :children #js [#js {:type "tabset"
-                                :children #js [#js {:type "tab" :name "uixcount1" :component "uixcounter"}
-                                               #js {:type "tab" :name "uixcount2" :component "uixcounter"}
-                                               #js {:type "tab" :name "wikipedia" :component "url"
-                                                    :config "https://en.wikipedia.org/wiki/Main_Page"}
-                                               #js {:type "tab" :name "uixcount3" :component "uixcounter"}
-                                               #js {:type "tab" :name "rcount1" :component "reagent-counter"}
-                                               #js {:type "tab" :name "rcount2" :component "reagent-counter"}
-                                               #js {:type "tab" :name "rclock1" :component "reagent-clock"}
-                                               #js {:type "tab" :name "rclock2" :component "reagent-clock"}
-                                               #js {:type "tab" :name "scounter1" :component "server-counter"}
-                                               #js {:type "tab" :name "scounter2" :component "server-counter"}
-                                               #js {:type "tab" :name "scounter3" :component "server-counter"}
-                                               #js {:type "tab" :name "sfortune1" :component "server-fortune"}
-                                               #js {:type "tab" :name "sfortune2" :component "server-fortune"}
-                                               #js {:type "tab" :name "size1" :component "size"}
-                                               #js {:type "tab" :name "size2" :component "size"}]}]}
-
-       :borders
-       #js [#js{:type "border"
-                 ;:selected 13,
-                :size 350
-                :location "left"
-                :children #js [#js {:type "tab"
-                                    :id "options"
-                                    :name "Options"
-                                    :component "clj-options"
-                              ;:icon "/r/quanta/adjustments-vertical.svg"
-                                    :enableClose false}]}]})
-
-
-
-
-(defn page-nomenu [_match]
-  [:div ($ flex-layout)])
-
-
 (def components
   {:wiki {:type "tab" :name "wikipedia" :component "url"
           :config "https://en.wikipedia.org/wiki/Main_Page"}
@@ -83,30 +41,7 @@
    [:button {:on-click #(add :reagent-clock)} "reagent-clock"]
    [:button {:on-click #(add :server-fortune)} "server-fortune"]
    [:button {:on-click #(add :server-counter)} "server-counter"]
-   [:button {:on-click #(add :option)} "option"]
-   ])
-
-(defn page [_match]
-  [:div  {:style {:height "100vh"
-                  :width "100vw"
-                  :top "0"
-                  :left "0"
-                  :margin "0"
-                  :padding "0"
-                  :display "flex"
-                  :flex-direction "column"
-                  :flex-grow 1}}
-   [:div {:dir "ltr"
-          :style {:margin "2px"
-                  :display "flex"
-                  :align-items "center"}}
-    [header]]
-   [:div {:style {:display "flex"
-                  :flex-grow "1"
-                  :position "relative"
-                  :border "1px solid #ddd"}}
-    [:div ($ flex-layout {:layout-json layout-json})]]])
-
+   [:button {:on-click #(add :option)} "option"]])
 
 (def flexlayout-page
   (create-flexlayout-page {:header header}))
@@ -115,4 +50,6 @@
 
 (defn mount []
   (let [root (uix.dom/create-root (js/document.getElementById "app"))]
-    (uix.dom/render-root ($ flex-layout {:layout-json layout-json}) root)))
+    (uix.dom/render-root 
+     ($ :div (r/as-element [flexlayout-page]))
+     root)))
