@@ -21,7 +21,7 @@
   }
 
  :aliases
- {:lint2
+ {:lint
   {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2025.04.07"}}
    :main-opts ["-m" "clj-kondo.main"
                "--config" ".clj-kondo/config.edn"
@@ -57,8 +57,10 @@
                           :services "demo-services.edn"}}
   
   :uix-flexlayout {:exec-fn modular.system/start!
-                   :exec-args {:config [{:spa {:title "uix-flexlayout demo"
-                                               :mount-fn demo.flexlayout-uix/mount}}]
+                   :exec-args {:config [{:extension {:disabled #{;"ui-tailwind"
+                                                                 "missionary-sci"}}
+                                         :spa {:title "uix-flexlayout demo"
+                                               :mount-fn demo.page.flexlayoutuix/mount}}]
                                :profile "watch"
                                :services "demo-services.edn"}}
   

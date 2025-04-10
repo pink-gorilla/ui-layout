@@ -1,6 +1,6 @@
 (ns demo.comp.demo
   (:require
-   [uix.core :refer [$ defui]]
+   [uix.core :refer [$ defui memo]]
    [uix.dom]
    [reagent.core :as r]
    [layout.flexlayout.hooks.size :refer [use-size]]
@@ -18,8 +18,12 @@
        ($ :span state)
        ($ button {:on-click #(set-state! inc)} "+"))))
 
+(def memo-button-component (memo button-component))
+
 (defmethod component-ui "uixcounter" [opts]
-  ($ button-component opts))
+  ;($ button-component opts)
+  ($ memo-button-component opts))
+  
 
 (defui unknown-component []
   (println "unknown is rendered.")

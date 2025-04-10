@@ -45,9 +45,7 @@
                                     :enableClose false}]}]})
 
 
-(defn mount []
-  (let [root (uix.dom/create-root (js/document.getElementById "app"))]
-    (uix.dom/render-root ($ flex-layout {:layout-json layout-json}) root)))
+
 
 (defn page-nomenu [_match]
   [:div ($ flex-layout)])
@@ -113,3 +111,8 @@
 (def flexlayout-page
   (create-flexlayout-page {:header header}))
 
+;; standalone
+
+(defn mount []
+  (let [root (uix.dom/create-root (js/document.getElementById "app"))]
+    (uix.dom/render-root ($ flex-layout {:layout-json layout-json}) root)))
