@@ -6,6 +6,11 @@
    [clojure.java.io :as io]
    [modular.fipp :refer [pprint-str]]))
 
+(defn category-path [{:keys [store-path]} category]
+  (str store-path
+       (if (str/ends-with? store-path "/") "" "/")
+       category "/"))
+
 (defn filename-layout [{:keys [store-path]} category layout-name]
   (str store-path
        (if (str/ends-with? store-path "/") "" "/")
@@ -16,6 +21,7 @@
   (if store-path
     (let [filename (filename-layout this category layout-name)]
       (fs/create-dirs store-path)
+      (fs/create-dirs (category-path this category))
       (println "saving layout to file: " filename)
       (spit filename (pprint-str layout-data)))
     (println "not saving layout " layout-name " - no layout-dir defined."))
