@@ -5,9 +5,9 @@
    [frontend.notification :refer [notification-container]]
    [frontend.dialog :refer [modal-container]]
    [webly.spa.env :refer [get-resource-path]]
-   [layout.flexlayout.core :refer [flexlayout-model-load create-flexlayout-page ]]
+   [layout.flexlayout.core :refer [flexlayout-model-load flexlayout-page ]]
    [layout.flexlayout.overview :refer [flexlayout-models-load flexlayout-overview-page]]
-   [demo.page.flexlayoutuix :refer [flexlayout-page]]
+   [demo.page.flexlayoutuix :refer [header]]
    ))
 
 (defn wrap-app [page match]
@@ -40,6 +40,7 @@
                                              {:category (get-in match [:data :category])
                                               :path {:model (get-in match [:parameters :path :model])} })
                                  :start flexlayout-model-load}]
+                  :header header
                   :view flexlayout-page}]]
     
     ["spaces/"

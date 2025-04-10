@@ -3,7 +3,7 @@
    [reagent.core :as r]
    [uix.core :refer [$ defui defhook]]
    [uix.dom]
-   [layout.flexlayout.core :refer [flex-layout save-layout create-flexlayout-page flexlayout-model-load add-node]]
+   [layout.flexlayout.core :refer [flex-layout save-layout flexlayout-page flexlayout-model-load add-node]]
    [layout.flexlayout.comp.option] ; side effects
    [demo.comp.flowy] ; side effects
    [demo.comp.demo ] ; side effects
@@ -43,13 +43,13 @@
    [:button {:on-click #(add :server-counter)} "server-counter"]
    [:button {:on-click #(add :option)} "option"]])
 
-(def flexlayout-page
-  (create-flexlayout-page {:header header}))
+(def flexlayout-page-wrapped
+  (flexlayout-page {:header header}))
 
 ;; standalone
 
 (defn mount []
   (let [root (uix.dom/create-root (js/document.getElementById "app"))]
     (uix.dom/render-root 
-     ($ :div (r/as-element [flexlayout-page]))
+     ($ :div (r/as-element [flexlayout-page-wrapped]))
      root)))

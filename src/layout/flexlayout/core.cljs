@@ -139,23 +139,24 @@
 (defn flexlayout-only [flexlayout-opts]
   ($ flex-layout flexlayout-opts))
 
-(defn create-flexlayout-page [{:keys [header]}]
- (fn [{:keys [parameters] :as match}]
-   (if-let [{:keys [model data]} @layout-data-model-a] 
-     (let [category (get-in match [:data :category])
-           model-js (clj->js model)
-           model-name (get-in parameters [:path :model])
-           flexlayout-opts {;:component-factory component-factory
-                            :layout-json model-js
-                            :category category
-                            :model-name model-name
-                            :data data
-                            }]
-       (println "model started: " model-name " category: " category)
-       (if header 
-         [flexlayout-with-header header flexlayout-opts]
-         [flexlayout-only flexlayout-opts]))
-     [:div
-      "loaded model is nil."
-      ])))
+(defn flexlayout-page [{:keys [parameters] :as match}]
+  (if-let [{:keys [model data]} @layout-data-model-a] 
+    (let [category (get-in match [:data :category])
+          header (get-in match [:data :header])
+          model-js (clj->js model)
+          model-name (get-in parameters [:path :model])
+          flexlayout-opts {;:component-factory component-factory
+                           :layout-json model-js
+                           :category category
+                           :model-name model-name
+                           :data data
+                           }]
+      (println "model started: " model-name " category: " category)
+      ;(println "flexlayout page match: " match)
+      (if header 
+        [flexlayout-with-header header flexlayout-opts]
+        [flexlayout-only flexlayout-opts]))
+    [:div
+     "loaded model is nil."
+     ]))
 
