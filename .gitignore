@@ -16,7 +16,11 @@ shadow-cljs.edn
 /node_modules
 .lsp
 .webly
-.clj-kondo
+.clj-kondo/
+!.clj-kondo/config.edn
 demo/node_modules/
 demo/target/
 .gorilla
+.flowy
+.flexlayout
+.calva

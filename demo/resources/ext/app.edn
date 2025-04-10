@@ -1,8 +1,8 @@
 {:name "demo-app"
  :lazy true
- :depends-on #{:ui-container  :ui-popover ; :ui-input
-               :ui-rnd :ui-gridlayout :ui-flexlayout :ui-site
-               :cljs-frisk :layout-golden}
+ :depends-on #{:ui-site :cljs-frisk
+               :ui-container  :ui-popover :ui-rnd :ui-gridlayout 
+               :ui-flexlayout  :layout-golden}
  :cljs-namespace [demo.page.welcome
                   ;demo.page.input
                   demo.page.desclist
@@ -13,7 +13,8 @@
                   demo.page.sidebartree
                   demo.page.tab
                   demo.page.golden
-                  demo.app]
+                  demo.app
+                  demo.page.flexlayoutuix]
  :cljs-ns-bindings {'demo.page.welcome {'welcome-page  demo.page.welcome/welcome-page}
                     ;'demo.page.input {'welcome-page  demo.page.input/input-page}
                     'demo.page.desclist {'desclist-page  demo.page.desclist/desclist-page}
@@ -29,8 +30,17 @@
                     'demo.page.tab {'tab-page  demo.page.tab/tab-page}
                     'demo.page.golden {'page  demo.page.golden/page}
                     'demo.app {'routes demo.app/routes
-                               'wrap-app demo.app/wrap-app}}
+                               'wrap-app demo.app/wrap-app}
+                    'demo.page.flexlayoutuix {'mount demo.page.flexlayoutuix/mount
+                                              'page demo.page.flexlayoutuix/page}}
  ; runtime
  :cljs-routes-reitit demo.app/routes 
+
+ :flowy [; clj
+         {:fun demo.fortune-cookie/get-cookie}
+         ; ap
+         {:fun demo.counter/counter-fn :mode :ap}]
+
+
 
  }

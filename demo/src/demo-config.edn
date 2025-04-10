@@ -1,4 +1,6 @@
-{
+{:extension {:disabled #{;"ui-tailwind"
+                         "missionary-sci"}}
+ 
  :spa {:title "ui-layout demo"
        :mount-fn router.app/mount}
  

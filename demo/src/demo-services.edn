@@ -3,18 +3,33 @@
  {:config1 {:start (modular.config/load-config! (:config #ref [:modular]))}
   :config {:start (deref (clip/ref :config1))}
 
-  :exts {:start (extension/discover)}
+  :exts {:start (extension/discover (:extension (clip/ref :config)))}
 
   :timbre {:start (modular.log/timbre-config!
                    (:timbre/clj (clip/ref :config)))}
-  
+
+  :exec {:start (flowy.executor/start-executor
+                 {:env {:flexlayout {:store-path ".flexlayout"
+                                     :template-resource-path "flexlayout-template"}}
+                  :exts (clip/ref :exts)}
+                 (:services (clip/ref :config)))}
+
+  ;; webserver
+
   :webly {:start (webly.spa/start-webly
                   {:exts (clip/ref :exts)
-                   :ctx {}}
+                   :ctx {:flowy (flowy.reflower/start-reflower (clip/ref :exec))}}
                   (clip/ref :config)
                   (:profile #ref [:modular]))
           :stop (webly.spa/stop-webly this)}
 
+  ;; nrepl  
+  :nrepl {:start (nrepl.server/start-server
+                  :bind "0.0.0.0"
+                  :port 9100
+                  :middleware cider.nrepl.middleware/cider-middleware
+                  :handler cider.nrepl/cider-nrepl-handler)
+          :stop (.close this)}
 
-
+;
   }}
