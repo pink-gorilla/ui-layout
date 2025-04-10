@@ -18,14 +18,12 @@
     (ratom/make-reaction
      (fn [] (get @data-a id)))))
 
-
-
 (defn component-factory [^TabSetNode node]
   (let [component (.getComponent node)
         id (.getId node)
         config (.getConfig node)
         opts {:component component
-              :id id 
+              :id id
               :config config
               :state (subscribe-state id)}]
     ;(println "component factory component: " opts)
@@ -33,19 +31,18 @@
 
 (defonce selected-id-a (r/atom nil))
 
-
 (defn handle-action [^js action]
   (when (= Actions.SELECT_TAB (.-type action))
     (let [cell-id (-> action .-data .-tabNode)]
       (println "selected tab: " cell-id)
       (reset! selected-id-a cell-id)
-            js/undefined))
+      js/undefined))
   (when (= Actions.DELETE_TAB (.-type action))
-     (let [data-a (:data-a @state-a)
-           cell-id (-> action .-data .-node)] ; here it is called node, above tabnNode, but both get the id
-       (println "cell deleted: " cell-id)   
-       (swap! data-a dissoc cell-id)
-       js/undefined))
+    (let [data-a (:data-a @state-a)
+          cell-id (-> action .-data .-node)] ; here it is called node, above tabnNode, but both get the id
+      (println "cell deleted: " cell-id)
+      (swap! data-a dissoc cell-id)
+      js/undefined))
   ;   action
   action)
 
@@ -66,10 +63,7 @@
                                    :model model
                                    :category category
                                    :model-name model-name
-                                   :data-a (r/atom data)
-                                   }))}))))
-
-
+                                   :data-a (r/atom data)}))}))))
 
 (defn add-node [{:keys [id state]
                  :or {id (nano-id 5)}
@@ -91,18 +85,17 @@
        (.getId ^TabSetNode tabset)
        (clj->js node)))))
 
-
 (defn save-layout []
   (println "save-layout..")
   (if @state-a
     (let [_ (println "layout found!")
-          ^Model model (:model @state-a) 
+          ^Model model (:model @state-a)
           category (:category @state-a)
           model-name (:model-name @state-a)
           model-clj (js->clj (.toJson model))]
       (println "model: " model-clj)
       (store/save-layout category model-name {:data @(:data-a @state-a)
-                                     :model model-clj}))
+                                              :model model-clj}))
     (println "no layout found. - not saving")))
 
 ;; page helper
@@ -112,8 +105,8 @@
 (defn flexlayout-model-load [opts]
   (let [model (get-in opts [:path :model])
         category (:category opts)]
-  (info "flexlayout model load: category: " category " model: " model)
-  (store/load-layout->atom layout-data-model-a category model)))
+    (info "flexlayout model load: category: " category " model: " model)
+    (store/load-layout->atom layout-data-model-a category model)))
 
 (defn flexlayout-with-header [header flexlayout-opts]
   [:div  {:style {:height "100vh"
@@ -140,7 +133,7 @@
   ($ flex-layout flexlayout-opts))
 
 (defn flexlayout-page [{:keys [parameters] :as match}]
-  (if-let [{:keys [model data]} @layout-data-model-a] 
+  (if-let [{:keys [model data]} @layout-data-model-a]
     (let [category (get-in match [:data :category])
           header (get-in match [:data :header])
           model-js (clj->js model)
@@ -149,14 +142,12 @@
                            :layout-json model-js
                            :category category
                            :model-name model-name
-                           :data data
-                           }]
+                           :data data}]
       (println "model started: " model-name " category: " category)
       ;(println "flexlayout page match: " match)
-      (if header 
+      (if header
         [flexlayout-with-header header flexlayout-opts]
         [flexlayout-only flexlayout-opts]))
     [:div
-     "loaded model is nil."
-     ]))
+     "loaded model is nil."]))
 

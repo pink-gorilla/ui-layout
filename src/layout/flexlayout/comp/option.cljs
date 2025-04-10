@@ -1,22 +1,21 @@
 (ns layout.flexlayout.comp.option
-  (:require 
+  (:require
    [reagent.core :as r]
    [reagent.ratom :as ratom]
    [uix.core :refer [$ defui]]
    [options.core :refer [options-ui2]]
    [options.flowy.core :refer [clj-option-ui]]
    [layout.flexlayout.comp :refer [component-ui]]
-   [layout.flexlayout.core :refer [selected-id-a state-a]]
-   ))
+   [layout.flexlayout.core :refer [selected-id-a state-a]]))
 
 (defn subscribe-selected-state []
- (ratom/make-reaction
+  (ratom/make-reaction
    (fn [] (get @(:data-a @state-a) @selected-id-a))))
 
 (defn clj-option [_]
   (r/with-let [selected-state-a (subscribe-selected-state)
                value-a (ratom/make-reaction
-                        (fn [] 
+                        (fn []
                           (if-let [value (:value @selected-state-a)]
                             value
                             {})))]
@@ -43,10 +42,8 @@
                        :edit edit
                        :state value-a
                        :set-fn set-fn}]
-         [:div "no options for selected tab"]
-         
-         )
-       
+         [:div "no options for selected tab"])
+
        #_[clj-option-ui {:id 66
                          :class "options-label-left"
                          :style {:background-color "yellow"
@@ -56,7 +53,6 @@
                                                             ;:min-width "400px"
                                  :height "400px"
                                  :width "400px"}}]])))
-
 
 (defmethod component-ui "clj-options" [opts]
   ($ :div (r/as-element [clj-option])))
@@ -68,14 +64,14 @@
    [:p (pr-str @selected-id-a)]
 
    [clj-option-ui {:id 66
-                     :class "options-label-left"
-                     :style {:background-color "yellow"
-                             :max-height "400px"
-                             :max-width "400px"
+                   :class "options-label-left"
+                   :style {:background-color "yellow"
+                           :max-height "400px"
+                           :max-width "400px"
                                                             ;:min-height "400px"
                                                             ;:min-width "400px"
-                             :height "400px"
-                             :width "400px"}}]])
+                           :height "400px"
+                           :width "400px"}}]])
 
 (defmethod component-ui "clj-options2" [opts]
   ($ :div (r/as-element [clj-option2])))

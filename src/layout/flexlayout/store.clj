@@ -7,7 +7,7 @@
    [modular.fipp :refer [pprint-str]]))
 
 (defn filename-layout [{:keys [store-path]} category layout-name]
-  (str store-path 
+  (str store-path
        (if (str/ends-with? store-path "/") "" "/")
        category "/"
        layout-name ".edn"))
@@ -24,7 +24,7 @@
 (defn load-template [{:keys [template-resource-path]} category]
   (-> (str template-resource-path "/" category ".edn")
       (io/resource)
-      (slurp) 
+      (slurp)
       (edn/read-string)))
 
 (defn load-layout [{:keys [store-path] :as this} category layout-name]

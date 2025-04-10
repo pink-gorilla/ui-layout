@@ -8,10 +8,7 @@
    [reitit.frontend.easy :as rfe]
    [uix.core :refer [$ defui defhook]]
    [uix.dom]
-   [layout.flexlayout.store :as store]
-   ))
-
-
+   [layout.flexlayout.store :as store]))
 
 ;; overview page helper
 
@@ -27,11 +24,10 @@
 (defn one [link-type layout-name]
   [:li [:a {:href (rfe/href link-type {:model layout-name})} layout-name]])
 
-
 (defn flexlayout-overview-page [match]
   (let [layout-new (human-id)
-        category (or (get-in match [:data :category]) "default") 
-        link-type (or (get-in match [:data :link]) :flexlayout) 
+        category (or (get-in match [:data :category]) "default")
+        link-type (or (get-in match [:data :link]) :flexlayout)
         one-el (fn [ln] [one link-type ln])]
     (println "overview page category: " category)
     ;(println "overview match: " match)
@@ -45,4 +41,4 @@
      [one-el layout-new]
      [:h1 "existing layouts"]
      (into [:ol]
-           (map one-el @layouts-a)  )]))
+           (map one-el @layouts-a))]))

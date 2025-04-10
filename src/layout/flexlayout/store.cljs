@@ -20,7 +20,6 @@
        (fn [err]
          (println "layout load error: " layout-name " error: " err)))))
 
-
 (defn load-layouts->atom [a category]
   (let [t (task 'layout.flexlayout.store/layout-list category)]
     (t (fn [data]

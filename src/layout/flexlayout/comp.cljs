@@ -1,7 +1,7 @@
 (ns layout.flexlayout.comp
-   (:require
-    [uix.core :refer [$ defui defhook]]
-    [uix.dom]))
+  (:require
+   [uix.core :refer [$ defui defhook]]
+   [uix.dom]))
 
 (defmulti component-ui  (fn [e] (:component e)))
 
