@@ -41,7 +41,7 @@
 (defn load-layout [{:keys [store-path] :as this} category layout-name]
   (let [filename  (filename-layout this category layout-name)]
     (if (and store-path (fs/exists? filename))
-      (-> (slurp filename) 
+      (-> (slurp filename)
           ;(edn/read-string)
           (edn-read-string))
       (load-template this category))))
