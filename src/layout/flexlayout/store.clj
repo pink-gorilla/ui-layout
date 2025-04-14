@@ -4,7 +4,8 @@
    [clojure.edn :as edn]
    [clojure.string :as str]
    [clojure.java.io :as io]
-   [modular.fipp :refer [pprint-str]]))
+   [modular.fipp :refer [pprint-str]]
+   [modular.encoding.edn :as medn]))
 
 (defn category-path [{:keys [store-path]} category]
   (str store-path
@@ -33,10 +34,16 @@
       (slurp)
       (edn/read-string)))
 
+(defn edn-read-string [s]
+  (edn/read-string {:default medn/default-reader
+                    :readers medn/data-readers} s))
+
 (defn load-layout [{:keys [store-path] :as this} category layout-name]
   (let [filename  (filename-layout this category layout-name)]
     (if (and store-path (fs/exists? filename))
-      (-> (slurp filename) (edn/read-string))
+      (-> (slurp filename) 
+          ;(edn/read-string)
+          (edn-read-string))
       (load-template this category))))
 
 (defn layout-list [{:keys [store-path]} category]
