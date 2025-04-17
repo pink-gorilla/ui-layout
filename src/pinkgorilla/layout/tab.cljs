@@ -4,14 +4,26 @@
 
 (defn- tab-menu [{:keys [active select-page]
                   :or {active 0}} tabs]
-  [:div {:style {:border-bottom "2px solid #eaeaea"}}
-   (into [:ul.flex.cursor-pointer]
+  [:div {:style {:border-bottom "2px solid #eaeaea"
+                 :padding-bottom "2px"
+                 }}
+   (into [:ul {:style {:list-style "none"
+                       :display "flex"
+                       :flex-direction "row"}}]
          (map-indexed (fn [i v]
-                        [:li.py-2.px-6.rounded-t-lg
-                         {:class (if (= active i)
-                                   "bg-blue-200"
-                                   "bg-white")
-                          :on-click #(select-page i)}
+                        [:li {:style {:margin-right "5px"
+                                      :padding-left "2px"
+                                      :padding-right "2px"
+                                      :padding-top "0px"
+                                      :padding-bottom "0px"
+                                      :display "inline"
+                                      :cursor "pointer"
+                                      :border "1px solid #ccc"
+                                      :border-radius "4px"
+                                      :background-color (if (= active i) 
+                                                          "lightblue"
+                                                          "lightgray")}
+                              :on-click #(select-page i)}
                          (first v)]) tabs))])
 
 (defn tab [& args]
