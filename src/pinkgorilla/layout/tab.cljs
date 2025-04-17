@@ -5,8 +5,7 @@
 (defn- tab-menu [{:keys [active select-page]
                   :or {active 0}} tabs]
   [:div {:style {:border-bottom "2px solid #eaeaea"
-                 :padding-bottom "2px"
-                 }}
+                 :padding-bottom "2px"}}
    (into [:ul {:style {:list-style "none"
                        :display "flex"
                        :flex-direction "row"}}]
@@ -20,7 +19,7 @@
                                       :cursor "pointer"
                                       :border "1px solid #ccc"
                                       :border-radius "4px"
-                                      :background-color (if (= active i) 
+                                      :background-color (if (= active i)
                                                           "lightblue"
                                                           "lightgray")}
                               :on-click #(select-page i)}
