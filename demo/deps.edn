@@ -3,11 +3,11 @@
          "target/node_modules" ; css from npm modules
          ]
  :deps
- {org.clojure/clojure    {:mvn/version "1.11.1"}
+ {org.clojure/clojure    {:mvn/version "1.12.4"}
   ; pink-gorilla
-  org.pinkgorilla/webly {:mvn/version "0.9.724"} ; build tool
+  org.pinkgorilla/webly {:mvn/version "0.20.731"} ; build tool
   org.pinkgorilla/extension {:mvn/version "0.0.16"}
-  org.pinkgorilla/ui-router {:mvn/version "0.2.43"}
+  org.pinkgorilla/ui-router {:mvn/version "0.3.45"} 
   org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.12"}  ; notification 
   org.pinkgorilla/css-theme {:mvn/version "0.1.8"}
   org.pinkgorilla/ui-site {:mvn/version "0.0.31"}; ipsum

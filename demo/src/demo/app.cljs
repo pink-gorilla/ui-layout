@@ -4,7 +4,7 @@
    [frontend.css :refer [css-loader]]
    [frontend.notification :refer [notification-container]]
    [frontend.dialog :refer [modal-container]]
-   [webly.spa.env :refer [get-resource-path]]
+   [shadowx.core :refer [get-resource-path]]
    [layout.flexlayout.core :refer [flexlayout-model-load flexlayout-page ]]
    [layout.flexlayout.overview :refer [flexlayout-models-load flexlayout-overview-page]]
    [demo.page.flexlayoutuix :refer [header]]

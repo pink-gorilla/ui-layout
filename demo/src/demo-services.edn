@@ -7,22 +7,26 @@
 
   :timbre {:start (modular.log/timbre-config!
                    (:timbre/clj (clip/ref :config)))}
-
-  :exec {:start (flowy.executor/start-executor
-                 {:env {:flexlayout {:store-path ".flexlayout"
-                                     :template-resource-path "flexlayout-template"}}
-                  :exts (clip/ref :exts)}
-                 (:services (clip/ref :config)))}
-
   ;; webserver
-
+  :token {:start (token.core/start-token-service
+                  {:users {}
+                   :secret "AbHzj834ri9"
+                   :store-path ".gorilla/tokenstore"
+                   :providers {}
+                   :auth-expiry 604800})}
+  :clj {:start (clj-service.core/start-clj-services
+                {:exts (clip/ref :exts)
+                 :env {:flexlayout {:store-path ".flexlayout"
+                                    :template-resource-path "flexlayout-template"}}})}
   :webly {:start (webly.spa/start-webly
                   {:exts (clip/ref :exts)
-                   :ctx {:flowy (flowy.reflower/start-reflower (clip/ref :exec))}}
+                   :ctx {:token (clip/ref :token)
+                         :clj (clip/ref :clj)
+                         :flowy (flowy.reflower/start-reflower (clip/ref :clj))}}
                   (clip/ref :config)
                   (:profile #ref [:modular]))
           :stop (webly.spa/stop-webly this)}
-
+  
   ;; nrepl  
   :nrepl {:start (nrepl.server/start-server
                   :bind "0.0.0.0"

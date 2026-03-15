@@ -1,7 +1,7 @@
 {:name "demo-app"
  :lazy true
  :depends-on #{:ui-site :cljs-frisk
-               :ui-container  :ui-popover :ui-rnd :ui-gridlayout 
+               :ui-container  :ui-popover :ui-rnd :ui-gridlayout
                :ui-flexlayout  :layout-golden}
  :cljs-namespace [demo.page.welcome
                   ;demo.page.input
@@ -34,13 +34,9 @@
                     'demo.page.flexlayoutuix {'mount demo.page.flexlayoutuix/mount
                                               'page demo.page.flexlayoutuix/page}}
  ; runtime
- :cljs-routes-reitit demo.app/routes 
+ :cljs-routes-reitit demo.app/routes
 
- :flowy [; clj
-         {:fun demo.fortune-cookie/get-cookie}
-         ; ap
-         {:fun demo.counter/counter-fn :mode :ap}]
-
-
-
- }
+ :clj-service [; clj
+               {:fun demo.fortune-cookie/get-cookie}
+             ; ap
+               {:fun demo.counter/counter-fn :mode :ap}]}
