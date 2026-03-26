@@ -1,6 +1,7 @@
 {:extension/name :ui-debounce-sci
  ; build
  :cljs/module :main
+ :cljs/when-defined :sci
  :cljs/namespace [pinkgorilla.debounce]
  :cljs/ns-bindings {'pinkgorilla.debounce {'debounce pinkgorilla.debounce/debounce}}}
                   

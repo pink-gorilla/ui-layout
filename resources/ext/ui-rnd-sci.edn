@@ -1,5 +1,6 @@
 {:extension/name :ui-rnd-sci
  ; build
  :cljs/module :main
+ :cljs/when-defined :sci
  :cljs/namespace [ui.rnd]
  :cljs/ns-bindings {'ui.rnd {'rnd ui.rnd/rnd}}}
