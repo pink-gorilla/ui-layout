@@ -1,10 +1,11 @@
-{:name "ui-container"
+{:extension/name :ui-container-sci
  ; build
- :lazy true
- :cljs-namespace [container
+ :cljs/module :main
+ :cljs/when-defined :sci
+ :cljs/namespace [container
                   ;pinkgorilla.layout.tailsui
                   ]
- :cljs-ns-bindings {'container {'sidebar  container/sidebar
+ :cljs/ns-bindings {'container {'sidebar  container/sidebar
                                 'tab container/tab
                                 ;'tab pinkgorilla.layout.tailsui/tab
                                 ;'tabs pinkgorilla.layout.tailsui/tabs

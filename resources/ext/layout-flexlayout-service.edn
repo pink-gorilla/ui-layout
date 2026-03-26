@@ -1,4 +1,4 @@
-{:name "layout-flexlayout-service"
+{:name :layout-flexlayout-service
  ; runtime 
  :clj-service [{:fun layout.flexlayout.store/save-layout :ctx :flexlayout :mode :clj}
                {:fun layout.flexlayout.store/load-layout :ctx :flexlayout :mode :clj}

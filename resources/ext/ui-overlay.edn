@@ -1,6 +1,0 @@
-{:name "ui-overlay"
- ; build
- :lazy false
- :cljs-namespace [ui.overlay]
- :cljs-ns-bindings {'ui.overlay {'overlay-add ui.overlay/overlay-add
-                                 'overlay-remove ui.overlay/overlay-remove}}}

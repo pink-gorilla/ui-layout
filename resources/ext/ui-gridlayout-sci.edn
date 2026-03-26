@@ -1,8 +1,8 @@
-{:name "ui-gridlayout"
+{:extension/name :ui-gridlayout-sci
  ; build
- :lazy true
- :cljs-namespace [ui.gridlayout]
- :cljs-ns-bindings {'ui.gridlayout {'gridlayout ui.gridlayout/gridlayout}}
+ :cljs/when-defined :sci
+ :cljs/namespace [ui.gridlayout]
+ :cljs/ns-bindings {'ui.gridlayout {'gridlayout ui.gridlayout/gridlayout}}
  ; theme
  :theme {:available  {:gridlayout {true ["react-grid-layout/css/styles.css"
                                          "react-resizable/css/styles.css"]}}

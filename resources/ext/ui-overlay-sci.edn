@@ -1,0 +1,6 @@
+{:extension/name :ui-overlay-sci
+ ; build
+ :cljs/when-defined :sci
+ :cljs/namespace [ui.overlay]
+ :cljs/ns-bindings {'ui.overlay {'overlay-add ui.overlay/overlay-add
+                                 'overlay-remove ui.overlay/overlay-remove}}}

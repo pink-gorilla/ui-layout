@@ -7,9 +7,10 @@
   com.pitch/uix.core {:mvn/version "1.4.3"}
   com.pitch/uix.dom {:mvn/version "1.4.3"}
   reagent/reagent {:mvn/version "1.3.0"} ; https://github.com/reagent-project/reagent
-  org.pinkgorilla/options {:mvn/version "0.2.25"} ; options brings flowy
-    ;org.pinkgorilla/flowy {:mvn/version "0.1.41"}
-  org.pinkgorilla/id {:mvn/version "0.1.4"}}
+  org.pinkgorilla/options {:mvn/version "0.3.26"} ; options brings flowy
+  ;org.pinkgorilla/flowy {:mvn/version "0.1.41"}
+  org.pinkgorilla/id {:mvn/version "0.2.5"}
+  }
  :aliases
  {; github ci  
   :build {:deps {io.github.clojure/tools.build {:mvn/version "0.9.6"}

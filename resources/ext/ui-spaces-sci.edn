@@ -1,10 +1,11 @@
-{:name "ui-spaces"
+{:extension/name :ui-spaces-sci
  ; build
- :lazy false
- :cljs-namespace [spaces.core
+ :cljs/module :main
+ :cljs/when-defined :sci
+ :cljs/namespace [spaces.core
                   spaces.layout.fixed
                   spaces.layout.screen]
- :cljs-ns-bindings {'spaces.core {;; top-level-spaces
+ :cljs/ns-bindings {'spaces.core {;; top-level-spaces
                                   'viewport spaces.core/viewport
                                   'fixed spaces.core/fixed
                                   ;; anchored-spaces

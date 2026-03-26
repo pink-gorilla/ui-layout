@@ -1,6 +1,7 @@
-{:name "ui-popover"
+{:extension/name :ui-popover-sci
  ; build
- :lazy true
+ :cljs/module :main
+ :cljs/when-defined :sci
  :cljs-namespace [ui.popover]
  :cljs-ns-bindings {'ui.popover {'popover ui.popover/popover
                                  'tooltip ui.popover/tooltip}}

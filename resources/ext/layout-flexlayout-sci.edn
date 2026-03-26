@@ -1,10 +1,10 @@
-{:name "ui-flexlayout"
+{:extension/name :ui-flexlayout-sci
  ; build
- :lazy true
- :depends-on #{:nano-id :human-id}
- :cljs-namespace [ui.flexlayout
+ :cljs/module :main
+ :cljs/when-defined :sci
+ :cljs/namespace [ui.flexlayout
                   layout.flexlayout.core]
- :cljs-ns-bindings {'ui.flexlayout {'create-model ui.flexlayout/create-model
+ :cljs/ns-bindings {'ui.flexlayout {'create-model ui.flexlayout/create-model
                                     'layout ui.flexlayout/layout
                                     'add-node ui.flexlayout/add-node
                                     'get-data ui.flexlayout/get-data

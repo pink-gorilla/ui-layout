@@ -1,5 +1,0 @@
-{:name "ui-rnd"
- ; build
- :lazy true
- :cljs-namespace [ui.rnd]
- :cljs-ns-bindings {'ui.rnd {'rnd ui.rnd/rnd}}}
