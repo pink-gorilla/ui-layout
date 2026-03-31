@@ -23,9 +23,7 @@
                            :value {:background-color "yellow"}}}
    :server-fortune {:type "tab" :name "sfortune" :component "server-fortune"}
    :server-counter {:type "tab" :name "scounter" :component "server-counter"}
-   :option {:type "tab" :name "option" :component "clj-options2"}
-   
-   })
+   :option {:type "tab" :name "option" :component "clj-options2"}})
 
 (defn add [component-key]
   (add-node (component-key components)))
@@ -43,10 +41,12 @@
    [:button {:on-click #(add :server-counter)} "server-counter"]
    [:button {:on-click #(add :option)} "option"]])
 
+
+
+;; standalone [ see deps.edn alias :uix-flexlayout]
+
 (def flexlayout-page-wrapped
   (flexlayout-page {:header header}))
-
-;; standalone
 
 (defn mount []
   (let [root (uix.dom/create-root (js/document.getElementById "app"))]

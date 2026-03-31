@@ -1,17 +1,17 @@
 {:paths ["src"
-         "resources" ; goldly-ext, css
+         "resources" ; ext, css
          "target/node_modules" ; css from npm modules
          ]
  :deps
  {org.clojure/clojure    {:mvn/version "1.12.4"}
   ; pink-gorilla
-  org.pinkgorilla/webly {:mvn/version "0.20.731"} ; build tool
-  org.pinkgorilla/extension {:mvn/version "0.0.16"}
-  org.pinkgorilla/ui-router {:mvn/version "0.3.45"} 
-  org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.12"}  ; notification 
+  org.pinkgorilla/webly {:mvn/version "0.20.736"} ; build tool
+  org.pinkgorilla/extension {:mvn/version "0.0.19"}
+  org.pinkgorilla/ui-router {:mvn/version "0.3.46"} 
+  org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.13"}  ; notification 
   org.pinkgorilla/css-theme {:mvn/version "0.1.8"}
-  org.pinkgorilla/ui-site {:mvn/version "0.0.31"}; ipsum
-  org.pinkgorilla/ui-pprint-frisk {:mvn/version "0.6.565"} ; pprint is no longer contained there.
+  org.pinkgorilla/ui-site {:mvn/version "0.0.32"} ; ipsum
+  org.pinkgorilla/ui-frisk {:mvn/version "0.6.566"} ; pprint is no longer contained there.
   ; this library
   org.pinkgorilla/ui-layout {:local/root "../" :deps/manifest :deps} 
   
@@ -22,7 +22,7 @@
 
  :aliases
  {:lint
-  {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2025.04.07"}}
+  {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2026.01.19"}}
    :main-opts ["-m" "clj-kondo.main"
                "--config" ".clj-kondo/config.edn"
                "--fail-level" "error"

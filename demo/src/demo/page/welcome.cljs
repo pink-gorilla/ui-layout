@@ -2,9 +2,7 @@
   (:require
    [reagent.core :as r]
    [ui.rnd :refer [rnd]]
-   [ui.overlay :as overlay]
-   ;[demo.lib.debounce :refer [save-input-debounced!]]
-   ))
+   [ui.overlay :as overlay]))
 
 
 (defn info-content []

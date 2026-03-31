@@ -1,9 +1,7 @@
-{:name "demo-app"
- :lazy true
- :depends-on #{:ui-site :cljs-frisk
-               :ui-container  :ui-popover :ui-rnd :ui-gridlayout
-               :ui-flexlayout  :layout-golden}
- :cljs-namespace [demo.page.welcome
+{:extension/name :demo-app
+ :cljs/depends-on #{:ui-site  :ui-container  :ui-popover :ui-rnd :ui-gridlayout
+                    :ui-flexlayout :layout-golden}
+ :cljs/namespace [demo.page.welcome
                   ;demo.page.input
                   demo.page.desclist
                   demo.page.layout
@@ -15,7 +13,7 @@
                   demo.page.golden
                   demo.app
                   demo.page.flexlayoutuix]
- :cljs-ns-bindings {'demo.page.welcome {'welcome-page  demo.page.welcome/welcome-page}
+ :cljs/ns-bindings {'demo.page.welcome {'welcome-page  demo.page.welcome/welcome-page}
                     ;'demo.page.input {'welcome-page  demo.page.input/input-page}
                     'demo.page.desclist {'desclist-page  demo.page.desclist/desclist-page}
                     'demo.page.layout {'layout-page  demo.page.layout/layout-page}
