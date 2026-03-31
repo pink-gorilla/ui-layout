@@ -16,9 +16,7 @@
 
   "golden-layout" "^2.6.0" ; tab/layout/window system
 
- ; react dependency is in webly.
- ; "react" "^18.0.0"
- ; "react-dom" "^18.0.0 "
+
 
  ;
   }}

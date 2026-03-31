@@ -32,4 +32,16 @@
                         :name "Options"
                         :component "clj-options"
                         ;:icon "/r/quanta/adjustments-vertical.svg"
-                        :enableClose false}]}]}}
+                        :enableClose false}]}
+   {:type "border"
+    :size 50
+    :location "bottom"
+    :children  [{:type "tab"
+                 :id "header1"
+                 :name "layout admin"
+                 :component "header-top"
+                 ;:icon "/r/quanta/adjustments-vertical.svg"
+                 :enableClose false}]}
+
+
+   ]}}

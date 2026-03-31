@@ -1,14 +1,14 @@
-(ns demo.page.flexlayoutuix
+(ns demo.comp.header
   (:require
    [reagent.core :as r]
    [uix.core :refer [$ defui defhook]]
    [uix.dom]
-   [layout.flexlayout.core :refer [flex-layout save-layout flexlayout-page flexlayout-model-load 
+   [layout.flexlayout.core :refer [flex-layout save-layout flexlayout-page flexlayout-model-load
                                    add-node]]
    [layout.flexlayout.comp.option] ; side effects
+   [layout.flexlayout.comp :refer [component-ui]]
    [demo.comp.flowy] ; side effects
-   [demo.comp.demo ] ; side effects
-   [demo.comp.header] ; side effects
+   [demo.comp.demo] ; side effects
    ))
 
 (def components
@@ -17,8 +17,8 @@
    :uix-counter {:type "tab" :name "uixcount" :component "uixcounter"}
    :size {:type "tab" :name "size" :component "size"}
    :reagent-counter {:type "tab" :name "rcount" :component "reagent-counter"}
-   :reagent-clock {:type "tab" 
-                   :name "rclock" 
+   :reagent-clock {:type "tab"
+                   :name "rclock"
                    :component "reagent-clock"
                    :state {:edit [{:type :select :path :background-color :name "background-color"
                                    :spec ["red" "green" "blue" "white" "yellow" "orange"]}]
@@ -43,13 +43,7 @@
    [:button {:on-click #(add :server-counter)} "server-counter"]
    [:button {:on-click #(add :option)} "option"]])
 
-;; standalone [ see deps.edn alias :uix-flexlayout]
 
-(def flexlayout-page-wrapped
-  (flexlayout-page {:header header}))
-
-(defn mount []
-  (let [root (uix.dom/create-root (js/document.getElementById "app"))]
-    (uix.dom/render-root 
-     ($ :div (r/as-element [flexlayout-page-wrapped]))
-     root)))
+(defmethod component-ui "header-top" [opts]
+  ($ :div (r/as-element [header])))
+ 

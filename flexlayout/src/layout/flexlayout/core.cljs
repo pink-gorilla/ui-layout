@@ -31,6 +31,10 @@
 
 (defonce selected-id-a (r/atom nil))
 
+(defn subscribe-selected-state []
+  (ratom/make-reaction
+   (fn [] (get @(:data-a @state-a) @selected-id-a))))
+
 (defn handle-action [^js action]
   (when (= Actions.SELECT_TAB (.-type action))
     (let [cell-id (-> action .-data .-tabNode)]
