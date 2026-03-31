@@ -16,7 +16,5 @@
 
   "golden-layout" "^2.6.0" ; tab/layout/window system
 
-
-
- ;
+;
   }}
