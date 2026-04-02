@@ -19,10 +19,7 @@
       (assoc :lib lib
              :version version
              :src-pom "pom-template.xml"
-             :transitive true
-            
-             )
-     
+             :transitive true)
       (bb/jar)))
 
 (defn deploy "Deploy the JAR to Clojars." [opts]
