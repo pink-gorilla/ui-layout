@@ -24,3 +24,6 @@ demo/target/
 .flowy
 .flexlayout
 .calva
+node_modules/
+target/
+ui-layout/target/

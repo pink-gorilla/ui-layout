@@ -31,6 +31,7 @@ jobs:
       shell: bash
     - name: Install dependencies
       run: |
+        cd ui-layout
         clojure -X:webly:npm-install
         ./scripts/copy_res.sh
     #- name: clj-kondo
