@@ -2,14 +2,13 @@
  ; build
  :cljs/module :main
  :cljs/when-defined :sci
- :cljs/namespace [ui.flexlayout
-                  layout.flexlayout.core]
- :cljs/ns-bindings {'ui.flexlayout {'create-model ui.flexlayout/create-model
-                                    'layout ui.flexlayout/layout
-                                    'add-node ui.flexlayout/add-node
-                                    'get-data ui.flexlayout/get-data
-                                    'component-ui ui.flexlayout/component-ui}}
-
+ :cljs/namespace [layout.flexlayout.core]
+ :cljs/ns-bindings {'layout.flexlayout.core {'flex-layout layout.flexlayout.core/flex-layout
+                                             'save-layout layout.flexlayout.core/save-layout
+                                             'load-layout layout.flexlayout.core/load-layout
+                                             'add-node layout.flexlayout.core/add-node
+                                             'get-data layout.flexlayout.core/get-data
+                                             'component-ui layout.flexlayout.core/component-ui}}
  :theme {:available  {:flexlayout {true ["flexlayout-react/style/light.css"]}}
          :current {:flexlayout true}}}
 

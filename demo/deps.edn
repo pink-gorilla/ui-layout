@@ -39,30 +39,13 @@
                       :profile "npm-install"}}
   
   :npm-install {:exec-args {:profile "npm-install"}}
-  :compile {:exec-args {:profile "compile"}}
-  :release {:exec-args {:profile "release"}}
-  :release-adv {:exec-args {:profile "release-adv"}}
-  :static {:exec-args {:profile "static"}}
-  :ci {:exec-args {:profile "ci"}}
   
-    ; RUN SERVICES (keep running)
-  :run-jetty {:exec-fn modular.system/start!
-              :exec-args {:config ["demo-config.edn"]
-                          :profile "jetty"
-                          :services "demo-services.edn"}}
+  :watch {:exec-fn modular.system/start!
+          :exec-args {:config ["demo-config.edn"]
+                      :profile "watch"
+                      :services "demo-services.edn"}}
   
-  :run-watch {:exec-fn modular.system/start!
-              :exec-args {:config ["demo-config.edn"]
-                          :profile "watch"
-                          :services "demo-services.edn"}}
   
-  :uix-flexlayout {:exec-fn modular.system/start!
-                   :exec-args {:config [{:extension {:disabled #{;"ui-tailwind"
-                                                                 "missionary-sci"}}
-                                         :spa {:title "uix-flexlayout demo"
-                                               :mount-fn demo.page.flexlayoutuix/mount}}]
-                               :profile "watch"
-                               :services "demo-services.edn"}}
   
 
   

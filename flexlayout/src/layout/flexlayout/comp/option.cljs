@@ -25,7 +25,8 @@
       [:div
        (if (and edit value)
          [options-ui2 {:class "options-theme-minimal"
-                       :style {:width "400px"
+                       :style {:width "100%"
+                               :height "100%"
                                ;:height "400px"
                                }
                        :edit edit
@@ -47,12 +48,15 @@
    [clj-option-ui {:id 66
                    :class "options-theme-minimal"
                    :style {:background-color "yellow"
-                           :max-height "400px"
-                           :max-width "400px"
+                           :width "100%"
+                           :height "100%"
+                           ;:max-height "400px"
+                           ;:max-width "400px"
                            ;:min-height "400px"
                            ;:min-width "400px"
-                           :height "400px"
-                           :width "400px"}}]])
+                           ;:height "400px"
+                           ;:width "400px"
+                           }}]])
 
 (defmethod component-ui "clj-options2" [opts]
   ($ :div (r/as-element [clj-option2])))

@@ -59,7 +59,7 @@
   (r/with-let [_ (println "reagent-clock is created.")
                counter (r/atom 0)
                interval-id (js/setInterval #(swap! counter inc) 1000)]  ; Side effect (runs once)
-    (let [c (or (get-in @state [:value :background-color]) "black")]
+    (let [c (or (get-in @state [:value :background-color]) "yellow")]
       [:div {:style {:background-color c}}
        "Clock: " @counter])
     (finally

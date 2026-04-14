@@ -44,8 +44,7 @@
    [:a {:href "/#/spaces/main"} [:p "layout"]]
    [:a {:href "/#/description-list"} [:p "Description List"]]
    [:a {:href "/#/grid-layout"} [:p "Grid Layout"]]
-  
-   [:a {:href "/#/flex-layout"} [:p "Flex Layout"]]
+      
    [:a {:href "/#/flex-layout-uix"} [:p "Flex Layout UIX2"]]
 
    [:a {:href "/#/spaces/main"} [:p "Spaces Layout"]]

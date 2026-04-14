@@ -6,17 +6,64 @@
    [nano-id.core :refer [nano-id]]
    [uix.core :refer [$ defui defhook]]
    [uix.dom]
-   ["flexlayout-react" :refer [Layout Model Actions  TabSetNode]]
+   ["flexlayout-react" :refer [Layout Model Action Actions TabSetNode DockLocation]]
    [layout.flexlayout.store :as store]
    [layout.flexlayout.comp :refer [component-ui]]))
 
+;; https://www.npmjs.com/package/flexlayout-react 20k weekly downloads from npm
+;; official? demo https://github.com/caplin/FlexLayout/blob/master/examples/demo/App.tsx
+
+;; clojurescript example
+;; https://github.com/dundalek/daba/blob/master/components/core/src/io/github/dundalek/daba/ui/viewers/root_docking.cljs
+
+;; https://github.com/openworm/geppetto-client/tree/development/geppetto-ui/src/flex-layout/src
+
+; more up to date fork: 
+; https://github.com/powerdragonfire/flexycakes/blob/master/src/model/Actions.ts
+
+;(let [^js tabset-node
+  ;        (tabset-with-most-children model)
+  ;                  ; (.getActiveTabset ^js model)
+  ;                  ; (.getFirstTabSet ^js model)
+ ;
+ ;         node #js {:id cell-id
+ ;                   :type "tab"}
+ ;         add-node-action (FlexLayout.Actions.addNode node (.getId tabset-node) (.-CENTER FlexLayout.DockLocation) -1)]
+ ;     (.doAction ^js model add-node-action)))))
+
+; cell-id (.getId node)
+
+;  attributeDefinitions.add("config", undefined).setType(Attribute.JSON);
+
+;; actions
+; ADD_NODE
+; ADJUST_BORDER_SPLIT
+; ADJUST_WEIGHTS
+; CLOSE_WINDOW
+; CREATE_WINDOW
+; DELETE_TAB
+; DELETE_TABSET
+; MAXIMIZE_TOGGLE
+; MOVE_NODE
+; POPOUT_TAB
+; POPOUT_TABSET
+; RENAME_TAB
+; SELECT_TAB
+; SET_ACTIVE_TABSET
+; UPDATE_MODEL_ATTRIBUTES
+
 (defonce state-a (r/atom {:data-a (r/atom {}) ; make sure subscrie-state always has defined value (being too careful here?)
                           }))
-
 (defn subscribe-state [id]
   (let [data-a (:data-a @state-a)]
     (ratom/make-reaction
      (fn [] (get @data-a id)))))
+
+(defonce selected-id-a (r/atom nil))
+
+(defn subscribe-selected-state []
+  (ratom/make-reaction
+   (fn [] (get @(:data-a @state-a) @selected-id-a))))
 
 (defn component-factory [^TabSetNode node]
   (let [component (.getComponent node)
@@ -29,22 +76,27 @@
     ;(println "component factory component: " opts)
     (component-ui opts)))
 
-(defonce selected-id-a (r/atom nil))
+#_(defn tab-button-title [{:keys [cell-id]}]
+    [:span (str cell-id)])
 
-(defn subscribe-selected-state []
-  (ratom/make-reaction
-   (fn [] (get @(:data-a @state-a) @selected-id-a))))
+#_(def title-factory (fn [^js node]
+                       (let [cell-id (.getId node)]
+                         (r/as-element
+                          [tab-button-title {;:!value (ratom/make-reaction
+                                       ;         (fn [] cell-id))
+                                             :cell-id cell-id}]))))
 
 (defn handle-action [^js action]
+  (js/console.log "handle-action: " action)
   (when (= Actions.SELECT_TAB (.-type action))
     (let [cell-id (-> action .-data .-tabNode)]
-      (println "selected tab: " cell-id)
+      (info "selected tab: " cell-id)
       (reset! selected-id-a cell-id)
       js/undefined))
   (when (= Actions.DELETE_TAB (.-type action))
     (let [data-a (:data-a @state-a)
           cell-id (-> action .-data .-node)] ; here it is called node, above tabnNode, but both get the id
-      (println "cell deleted: " cell-id)
+      (info "cell deleted: " cell-id)
       (swap! data-a dissoc cell-id)
       js/undefined))
   ;   action
@@ -62,6 +114,7 @@
           {:model model
            :factory component-factory
            :onAction handle-action
+           ;:titleFactory title-factory
            :ref (fn [el]
                   (reset! state-a {:layout el
                                    :model model
@@ -69,38 +122,71 @@
                                    :model-name model-name
                                    :data-a (r/atom data)}))}))))
 
-(defn add-node [{:keys [id state]
-                 :or {id (nano-id 5)}
-                 :as node}]
-  (let [model (:model @state-a)
-        layout (:layout @state-a)
-        data-a (:data-a @state-a)
-        node (assoc node :id id)]
+(defn add-node
+  ([opts]
+   (let [model (:model @state-a)
+         tabset ^TabSetNode (or (.getActiveTabset  ^Model model)
+                                (.getFirstTabSet  ^Model model))
+         tab-id (.getId ^TabSetNode tabset)]
+     (add-node opts tab-id)))
+  ([{:keys [id state]
+     :or {id (nano-id 5)}
+     :as node}
+    tab-id]
+   (let [layout ^Model (:layout @state-a)
+         data-a (:data-a @state-a)
+         node (assoc node :id id)]
   ;  {:type "tab" :name "wikipedia" :component "url"
   ;                              :config "https://en.wikipedia.org/wiki/Main_Page"}
-    (println "adding new node to layout..")
-    (when state
-      (swap! data-a assoc id state))
-    (let [tabset (or (.getActiveTabset  ^Model model)
-                     (.getFirstTabSet  ^Model model))]
-      (.addTabToTabSet
-       ^Model
-       layout
-       (.getId ^TabSetNode tabset)
-       (clj->js node)))))
+     (info "adding new node to tab: " tab-id)
+     (when state
+       (swap! data-a assoc id state))
+     (.addTabToTabSet layout tab-id (clj->js node)))))
+
+(defn- dock-location-kw->enum [dock-kw]
+  (case dock-kw
+    :center (.-CENTER DockLocation)
+    :right (.-RIGHT DockLocation)
+    :left (.-LEFT DockLocation)
+    :top (.-TOP DockLocation)
+    :bottom (.-BOTTOM DockLocation)
+    (.-CENTER DockLocation)))
+
+(defn set-active-tabset [tabset-id]
+  (js/console.log "set-active-tabset: " tabset-id)
+  (let [;action (.setActiveTabSet Actions tabset-id "__main_window_id__")
+        action (Action. Actions.SET_ACTIVE_TABSET (clj->js {:tabsetNode tabset-id :windowId "__main_window_id__"}));
+        _ (js/console.log "set-active-tabset: " action)
+        model ^Model (:model @state-a)]
+    (.doAction model action)
+    (js/console.log "set-active-tabset: " tabset-id "DONE.")))
+
+(defn move-node
+  [tab-id container-id dock-kw]
+  (info "move-tab " tab-id " to container" container-id)
+  (let [model ^Model (:model @state-a)
+        dock-location (.getName ^DockLocation (dock-location-kw->enum dock-kw))
+        _ (js/console.log "dock location: " dock-location)
+        ;action (Actions.moveNode tab-id container-id  dock-location -1)
+        action (Action. Actions.MOVE_NODE (clj->js {:fromNode tab-id
+                                                    :toNode container-id
+                                                    :location dock-location
+                                                    :index -1}));
+        _ (js/console.log "move-node: " action)]
+    (.doAction  model action)
+    (info "move-tab.. done")))
 
 (defn save-layout []
-  (println "save-layout..")
+  (info "save-layout..")
   (if @state-a
-    (let [_ (println "layout found!")
-          ^Model model (:model @state-a)
+    (let [^Model model (:model @state-a)
           category (:category @state-a)
           model-name (:model-name @state-a)
           model-clj (js->clj (.toJson model))]
-      (println "model: " model-clj)
+      (info "model: " model-clj)
       (store/save-layout category model-name {:data @(:data-a @state-a)
                                               :model model-clj}))
-    (println "no layout found. - not saving")))
+    (info "no layout found. - not saving")))
 
 ;; page helper
 
@@ -147,7 +233,7 @@
                            :category category
                            :model-name model-name
                            :data data}]
-      (println "model started: " model-name " category: " category)
+      (info "model started: " model-name " category: " category)
       ;(println "flexlayout page match: " match)
       (if header
         [flexlayout-with-header header flexlayout-opts]

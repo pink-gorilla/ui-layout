@@ -33,7 +33,6 @@
     ["golden" {:name 'demo.page.golden/page}]
 
     ;; flex layout
-    ["flex-layout" {:name 'demo.page.flexlayout/flex-layout-page}]
     ["flex-layout-uix" {:category "demo27"
                         :link :flexlayout}
      ["" {:name :flexlayout-overview

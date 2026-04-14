@@ -1,13 +1,8 @@
 (ns layout.flexlayout.overview
   (:require
-   [taoensso.timbre :refer-macros [debug info error]]
-   [reagent.core :as r]
-   [reagent.ratom :as ratom]
-   [nano-id.core :refer [nano-id]]
+   [reagent.core :as r] 
    [human-id.core :refer [human-id]]
    [reitit.frontend.easy :as rfe]
-   [uix.core :refer [$ defui defhook]]
-   [uix.dom]
    [layout.flexlayout.store :as store]))
 
 ;; overview page helper

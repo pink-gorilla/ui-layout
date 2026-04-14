@@ -54,9 +54,7 @@ clojure-quant/quanta-studio/src/quanta/studio/page/layout.cljs
 pink-gorilla/dali-table/demo/src/demo/helper/daliclj.cljs
 pink-gorilla/dali-table/demo/src/demo/page/layout_viewer.cljs
 pink-gorilla/dali-table/demo/src/demo/page/layout.cljs
-pink-gorilla/ui-layout/demo/src/demo/lib/algo.cljs
-pink-gorilla/ui-layout/demo/src/demo/page/flexlayout.cljs
-pink-gorilla/ui-layout/src/ui/flexlayout.cljs
+
 
 layout.flexlayout.core NEW
 clojure-quant/algo-juan/quanta-studio/src/quanta/studio/flexlayout/layout/screener.cljs
@@ -67,7 +65,3 @@ clojure-quant/algo-juan/quanta-studio/src/quanta/studio/flexlayout/dali/backtest
 clojure-quant/algo-juan/quanta-studio/src/quanta/studio/flexlayout/component/screener.cljs
 clojure-quant/algo-juan/quanta-studio/src/quanta/studio/routes.cljs
 
-pink-gorilla/ui-layout/demo/src/demo/app.cljs
-pink-gorilla/ui-layout/demo/src/demo/page/flexlayoutuix.cljs
-pink-gorilla/ui-layout/src/layout/flexlayout/core.cljs
-pink-gorilla/ui-layout/src/layout/flexlayout/comp/option.cljs

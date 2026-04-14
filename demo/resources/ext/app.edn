@@ -6,7 +6,6 @@
                   demo.page.desclist
                   demo.page.layout
                   demo.page.gridlayout
-                  demo.page.flexlayout
                   demo.page.spaces
                   demo.page.sidebartree
                   demo.page.tab
@@ -18,7 +17,6 @@
                     'demo.page.desclist {'desclist-page  demo.page.desclist/desclist-page}
                     'demo.page.layout {'layout-page  demo.page.layout/layout-page}
                     'demo.page.gridlayout {'grid-layout-page  demo.page.gridlayout/grid-layout-page}
-                    'demo.page.flexlayout {'flex-layout-page demo.page.flexlayout/flex-layout-page}
                     'demo.page.spaces {'spaces-page  demo.page.spaces/spaces-page
                                        'spaces-layout-lrt-viewport-page demo.page.spaces/spaces-layout-lrt-viewport-page
                                        'spaces-layout-lrm-viewport-page demo.page.spaces/spaces-layout-lrm-viewport-page
