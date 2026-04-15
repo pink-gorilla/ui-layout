@@ -1,11 +1,10 @@
 (ns layout.flexlayout.store
   (:require
    [babashka.fs :as fs]
-   [clojure.edn :as edn]
    [clojure.string :as str]
    [clojure.java.io :as io]
-   [modular.fipp :refer [pprint-str]]
-   [modular.encoding.edn :as medn]))
+   [ednx.edn :refer [slurp-edn]]
+   [ednx.fipp :refer [spit-fipp]]))
 
 (defn category-path [{:keys [store-path]} category]
   (str store-path
@@ -24,15 +23,14 @@
       (fs/create-dirs store-path)
       (fs/create-dirs (category-path this category))
       (println "saving layout to file: " filename)
-      (spit filename (pprint-str layout-data)))
-    (println "not saving layout " layout-name " - no layout-dir defined."))
+      (spit-fipp filename layout-data))
+  (println "not saving layout " layout-name " - no layout-dir defined."))
   :done)
 
 (defn load-template [{:keys [template-resource-path]} category]
   (-> (str template-resource-path "/" category ".edn")
       (io/resource)
-      (slurp)
-      (edn/read-string)))
+      (slurp-edn)))
 
 (defn edn-read-string [s]
   (edn/read-string {:default medn/default-reader
@@ -41,8 +39,7 @@
 (defn load-layout [{:keys [store-path] :as this} category layout-name]
   (let [filename  (filename-layout this category layout-name)]
     (if (and store-path (fs/exists? filename))
-      (-> (slurp filename)
-          (edn-read-string))
+      (slurp-edn filename)
       (load-template this category))))
 
 (defn layout-list [{:keys [store-path]} category]
