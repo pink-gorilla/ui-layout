@@ -9,9 +9,9 @@
   org.pinkgorilla/extension {:mvn/version "0.0.19"}
   org.pinkgorilla/ui-router {:mvn/version "0.3.46"} 
   org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.13"}  ; notification 
-  org.pinkgorilla/css-theme {:mvn/version "0.1.8"}
+  org.pinkgorilla/css-theme {:mvn/version "0.1.13"}
   org.pinkgorilla/ui-site {:mvn/version "0.0.32"} ; ipsum
-  org.pinkgorilla/ui-frisk {:mvn/version "0.6.566"} ; pprint is no longer contained there.
+  org.pinkgorilla/ui-frisk {:mvn/version "0.6.567"} ; pprint is no longer contained there.
   ; this library
   org.pinkgorilla/ui-layout {:local/root "../ui-layout" :deps/manifest :deps} 
   

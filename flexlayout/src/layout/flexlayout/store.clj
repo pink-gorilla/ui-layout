@@ -24,17 +24,13 @@
       (fs/create-dirs (category-path this category))
       (println "saving layout to file: " filename)
       (spit-fipp filename layout-data))
-  (println "not saving layout " layout-name " - no layout-dir defined."))
+    (println "not saving layout " layout-name " - no layout-dir defined."))
   :done)
 
 (defn load-template [{:keys [template-resource-path]} category]
   (-> (str template-resource-path "/" category ".edn")
       (io/resource)
       (slurp-edn)))
-
-(defn edn-read-string [s]
-  (edn/read-string {:default medn/default-reader
-                    :readers medn/data-readers} s))
 
 (defn load-layout [{:keys [store-path] :as this} category layout-name]
   (let [filename  (filename-layout this category layout-name)]
